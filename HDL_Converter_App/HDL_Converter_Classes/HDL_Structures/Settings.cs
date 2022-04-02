@@ -16,6 +16,10 @@ namespace HDL_Converter_Classes.HDL_Structures
     public class Settings
     {
         /// <summary>
+        /// Defines the HDL Language that is used (given by the Input HDL)
+        /// </summary>
+        public HDLLanguage language;
+        /// <summary>
         /// Defines if module instantiation will be empty or containing a wire of the same name.
         /// </summary>
         /// <example>

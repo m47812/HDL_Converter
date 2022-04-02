@@ -115,5 +115,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HDL_Converter_Classes\HDL_Converter_Classes.csproj">
+      <Project>{e840e66a-1e38-4178-bc8d-d4b54779f96d}</Project>
+      <Name>HDL_Converter_Classes</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

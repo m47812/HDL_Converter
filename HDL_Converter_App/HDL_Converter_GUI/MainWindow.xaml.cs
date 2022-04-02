@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HDL_Converter_Classes;
+using HDL_Converter_Classes.HDL_Structures;
 
 namespace HDL_Converter_GUI
 {
