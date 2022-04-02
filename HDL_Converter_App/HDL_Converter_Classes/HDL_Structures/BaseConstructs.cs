@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HDL_Converter_Core.HDL_Structures
+namespace HDL_Converter_Classes.HDL_Structures
 {
     /// <summary>
     /// A enum for defining the data direction of a Wire
