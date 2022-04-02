@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:HDL_Converter_GUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
     </Application.Resources>
 </Application>

@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HDL_Converter_GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:custom="clr-namespace:HDL_Converter_GUI.GUI_Components">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+
+        <custom:InputPanel x:Name="paInput" Grid.Row="0"/>
+        <custom:OutputRequestPanel x:Name="paSelectOutput" Grid.Row="1"/>
+       
         
+
     </Grid>
 </Window>
