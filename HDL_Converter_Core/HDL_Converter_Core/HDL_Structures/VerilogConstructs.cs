@@ -10,6 +10,11 @@ namespace HDL_Converter_Core.HDL_Structures
     /// </summary>
     class VeriWire : Wire
     {
+
+        /// <summary>
+        /// Generates the module instantiation line for one wire
+        /// </summary>
+        /// <returns></returns>
         public override string generateInstantiationLine()
         {
             string commandLine;
@@ -26,7 +31,14 @@ namespace HDL_Converter_Core.HDL_Structures
 
         public override string generateWireDeclarationLine()
         {
-            return "wire " + this.name + ";";
+            if(this.busSize != "")
+            {
+                return "wire " + this.busSize + " " + this.name + ";";
+            }
+            else
+            {
+                 return "wire " + this.name + ";";
+            }
         }
     }
 
@@ -37,12 +49,21 @@ namespace HDL_Converter_Core.HDL_Structures
     {
         public override string generateInstantiationLine()
         {
-            throw new NotImplementedException();
+            string commandLine;
+            if (this.settings.emptyIOs)
+            {
+                commandLine = '.' + this.name + "()";
+            }
+            else
+            {
+                commandLine = '.' + this.name + '(' + this.name + ")";
+            }
+            return commandLine;
         }
 
         public override string generateWireDeclarationLine()
         {
-            throw new NotImplementedException();
+            return "localparam  " + this.name +" = "+this.value+ ";";
         }
     }
 }

@@ -58,7 +58,7 @@ namespace HDL_Converter_Core.HDL_Structures
     /// </summary>
     abstract class Parameter : ModuleComponent
     {
-        string value;
+        public string value;
     }
 
     /// <summary>
@@ -69,7 +69,13 @@ namespace HDL_Converter_Core.HDL_Structures
         /// <summary>
         /// The data direction of the IO
         /// </summary>
-        PortDirection direction; 
+        public PortDirection direction;
+
+        /// <summary>
+        /// Contains the Bus size of e wire
+        /// </summary>
+        /// <example>"[7:0]" for Verilog or "(7 downto 0)" for VHDL</example>
+        public string busSize;
 
     }
 }
