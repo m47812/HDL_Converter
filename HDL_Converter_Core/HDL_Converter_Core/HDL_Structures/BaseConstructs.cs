@@ -75,7 +75,7 @@ namespace HDL_Converter_Core.HDL_Structures
         /// Contains the Bus size of e wire
         /// </summary>
         /// <example>"[7:0]" for Verilog or "(7 downto 0)" for VHDL</example>
-        public string busSize;
+        public string busSize = "";
 
     }
 }
