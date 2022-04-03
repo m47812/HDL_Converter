@@ -75,6 +75,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUIController.cs" />
     <Compile Include="GUI_Components\InputPanel.xaml.cs">
       <DependentUpon>InputPanel.xaml</DependentUpon>
     </Compile>
