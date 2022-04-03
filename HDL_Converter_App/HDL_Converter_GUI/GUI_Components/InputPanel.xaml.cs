@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HDL_Converter_Classes.HDL_Structures;
 
 namespace HDL_Converter_GUI.GUI_Components
 {
@@ -23,6 +24,13 @@ namespace HDL_Converter_GUI.GUI_Components
         public InputPanel()
         {
             InitializeComponent();
+        }
+
+        public string getHDLInput()
+        {
+            string hdlCode = tbHDLInput.Text;
+            if (hdlCode != "" && hdlCode != null) return hdlCode;
+            return null;
         }
     }
 }

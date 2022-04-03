@@ -16,7 +16,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <GroupBox Header="Insert HDL Code Here" FontSize="14">
-                <TextBox>
+                <TextBox x:Name="tbHDLInput" AcceptsReturn="True">
 
                 </TextBox>
             </GroupBox>
