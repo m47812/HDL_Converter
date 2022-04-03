@@ -66,13 +66,13 @@ namespace HDL_Converter_Test
         }
 
         [TestMethod]
-        public void test_veriwire_separate_elements()
+        public void test_separate_elements()
         {
             string path = "@../../../../../Test_data/Verilog_Wire_Separate_Elements.txt";
             string[] fileContent = GeneralTests.load_testdata_from_file(path);
             for(int i = 0; i < fileContent.Length; i += 2)
             {
-                List<string[]> computed = VeriWire.separateElements(fileContent[i]);
+                List<string[]> computed = VeriDataProcessing.separateElements(fileContent[i]);
                 string[] expected = fileContent[i + 1].Split('|');
                 for(int j = 0; j < expected.Length; j++)
                 {

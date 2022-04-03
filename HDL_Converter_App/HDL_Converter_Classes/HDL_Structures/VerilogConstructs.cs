@@ -59,15 +59,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// A Wire in the Verilog domain serving as an IO to a module
     /// </summary>
     public class VeriWire : Wire
-    {
-        /// <summary>
-        /// Separates a string of HDL Code into Wire Components
-        /// </summary>
-        /// <param name="hdlCode">A HDL code segment (the part that is inbetween the parenthesi 
-        /// containing the module IO declaration
-        /// </param>
-        /// <returns>A List of string arrays each array containing the module code at index 0
-        /// and (if available) a comment at index 1</returns>
+    {        
         public static List<string[]> separateElements(string hdlCode)
         {
             string[] splited = hdlCode.Split(',');
@@ -144,6 +136,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VeriParameter : Parameter
     {
+        
         public override string generateInstantiationLine()
         {
             string commandLine;
@@ -161,6 +154,50 @@ namespace HDL_Converter_Classes.HDL_Structures
         public override string generateWireDeclarationLine()
         {
             return "localparam " + this.name +" = "+this.value+ ";";
+        }
+    }
+
+    public static class VeriDataProcessing
+    {
+        /// <summary>
+        /// Separates a string of HDL Code into Wire Components
+        /// </summary>
+        /// <param name="hdlCode">A HDL code segment (the part that is inbetween the parenthesi 
+        /// containing the module IO declaration
+        /// </param>
+        /// <returns>A List of string arrays each array containing the module code at index 0
+        /// and (if available) a comment at index 1</returns>
+        public static List<string[]> separateElements(string hdlCode)
+        {
+            List<string[]> retList = new List<string[]>();
+            string[] hdlSplited = hdlCode.Replace("//", "//{Comment}").Split(new string[] { System.Environment.NewLine, "//" }, StringSplitOptions.None);
+            foreach (string element in hdlSplited)
+            {
+                if (element.Trim() == "") continue;
+                if (!element.Contains("{Comment}"))
+                {
+                    string[] splitedAtComma = element.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach(string commaSpearated in splitedAtComma)
+                    {
+                        string[] nextEntry = new string[2];
+                        nextEntry[0] = commaSpearated.Replace(',', ' ').Trim();
+                        nextEntry[1] = "";
+                        retList.Add(nextEntry);
+                    }                    
+                }
+                else
+                {
+                    if (retList.Last()[1] != "")
+                    {
+                        string[] nextEntry = new string[2];
+                        nextEntry[0] = "";
+                        nextEntry[1] = "";
+                        retList.Add(nextEntry);
+                    }
+                    retList.Last()[1] = element.Replace("{Comment}", " ").Trim();
+                }
+            }
+            return retList;
         }
     }
 }
