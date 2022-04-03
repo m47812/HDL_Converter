@@ -89,6 +89,50 @@ namespace HDL_Converter_Classes.HDL_Structures
                  return "wire " + this.name + ";";
             }
         }
+
+        /// <summary>
+        /// This Function Initializes the obejcts attributes from a line of HDL Code (Excluding Comments)
+        /// </summary>
+        /// <param name="codeLine">HDL Code for one Wire or Parameter without comment (output format of separate elements function)</param>
+        public override void initializeFromCodeLine(string codeLine)
+        {
+            string[] lowerData = codeLine.ToLower().Split(' ');
+            if (lowerData[0].Contains("input"))
+            {
+                this.direction = PortDirection.Input;
+            }else if (lowerData[0].Contains("output"))
+            {
+                this.direction = PortDirection.Output;
+            }else if (lowerData[0].Contains("inout"))
+            {
+                this.direction = PortDirection.InOut;
+            }
+            else
+            {
+                throw new FormatException("Wire had invalid data direction");
+            }
+            string restOfData = "";
+            for (int i = 1; i < lowerData.Length; i++) restOfData += lowerData[i];
+            if (restOfData.Contains('['))
+            {
+                string busSize = "";
+                bool enabled = false;
+                foreach (char s in restOfData)
+                {
+                    if (s == '[') enabled = true;
+                    if (enabled) busSize += s;
+                    if (s == ']') break;
+                }
+                this.busSize = busSize;
+                this.name = codeLine.Split(']')[1].Trim();
+            }
+            else
+            {
+                this.busSize = "";
+                int nameIndex = codeLine.ToLower().IndexOf("wire")+4;
+                this.name = codeLine.Substring(nameIndex).Trim();
+            }            
+        }
     }
 
     /// <summary>
@@ -114,6 +158,11 @@ namespace HDL_Converter_Classes.HDL_Structures
         public override string generateWireDeclarationLine()
         {
             return "localparam " + this.name +" = "+this.value+ ";";
+        }
+
+        public override void initializeFromCodeLine(string codeLine)
+        {
+            throw new NotImplementedException();
         }
     }
 

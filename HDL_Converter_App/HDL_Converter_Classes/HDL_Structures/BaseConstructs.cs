@@ -100,6 +100,12 @@ namespace HDL_Converter_Classes.HDL_Structures
         }
 
         /// <summary>
+        /// This Function Initializes the obejcts attributes from a line of HDL Code (Excluding Comments)
+        /// </summary>
+        /// <param name="codeLine">HDL Code for one Wire or Parameter without comment (output format of separate elements function)</param>
+        public abstract void initializeFromCodeLine(string codeLine);
+
+        /// <summary>
         /// Generates a Line for this component in an module instantiation
         /// </summary>
         /// <returns>Module instantion line as a string</returns>

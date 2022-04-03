@@ -82,5 +82,20 @@ namespace HDL_Converter_Test
             }
         }
 
+        [DataRow("Input wire myWire", "myWire", "", PortDirection.Input)]
+        [DataRow("Input wire [7:0] myBus", "myBus", "[7:0]", PortDirection.Input)]
+        [DataRow("output wire myWire", "myWire", "", PortDirection.Output)]
+        [DataRow("InOut Wire[8:0] myWire", "myWire", "[8:0]", PortDirection.InOut)]
+        [DataTestMethod]
+        public void test_veriwire_initialize_from_codeline(string codeLine, 
+            string name, string busSize, PortDirection direction)
+        {
+            VeriWire wire = new VeriWire();
+            wire.initializeFromCodeLine(codeLine);
+            Assert.IsTrue(direction == wire.direction);
+            Assert.IsTrue(name == wire.name);
+            Assert.IsTrue(busSize == wire.busSize);
+        }
+
     }
 }
