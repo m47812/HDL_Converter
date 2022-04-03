@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using HDL_Converter_Classes.HDL_Structures;
 
 namespace HDL_Converter_Test

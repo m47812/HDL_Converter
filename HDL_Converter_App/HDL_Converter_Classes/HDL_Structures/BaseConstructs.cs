@@ -43,6 +43,7 @@ namespace HDL_Converter_Classes.HDL_Structures
         {
             int cnt_opened = 0;
             bool hadParenteses = false;
+            bool hasClosed = false;
             int startIndex = 0, endIndex = 0;
             for(int i = 0; i < data.Length; i++)
             {
@@ -58,9 +59,10 @@ namespace HDL_Converter_Classes.HDL_Structures
                 if (data[i] == close)
                 {
                     cnt_opened--;
-                    if(cnt_opened == 0)
+                    if(cnt_opened == 0 && !hasClosed)
                     {
                         endIndex = i;
+                        hasClosed = true;
                     }
                 }
             }
