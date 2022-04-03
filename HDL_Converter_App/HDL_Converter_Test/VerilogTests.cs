@@ -97,5 +97,17 @@ namespace HDL_Converter_Test
             Assert.IsTrue(busSize == wire.busSize);
         }
 
+        [DataRow("parameter myParam = 42", "myParam", "42")]
+        [DataRow("parameter my_parameter = 'h0A", "my_parameter", "'h0A")]
+        [DataTestMethod]
+        public void test_veriParameter_initialize_from_codeline(string codeLine,
+            string name, string value)
+        {
+            VeriParameter param = new VeriParameter();
+            param.initializeFromCodeLine(codeLine);
+            Assert.IsTrue(name == param.name);
+            Assert.IsTrue(value == param.value);
+        }
+
     }
 }

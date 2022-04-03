@@ -160,9 +160,16 @@ namespace HDL_Converter_Classes.HDL_Structures
             return "localparam " + this.name +" = "+this.value+ ";";
         }
 
+        /// <summary>
+        /// This Function Initializes the obejcts attributes from a line of HDL Code (Excluding Comments)
+        /// </summary>
+        /// <param name="codeLine">HDL Code for one Wire or Parameter without comment (output format of separate elements function)</param>
         public override void initializeFromCodeLine(string codeLine)
         {
-            throw new NotImplementedException();
+            int valueIndex = codeLine.IndexOf('=');
+            this.value = codeLine.Substring(valueIndex + 1).Trim();
+            int paramIndex = codeLine.ToLower().IndexOf("parameter")+9;
+            this.name = codeLine.Substring(paramIndex, valueIndex - 1- paramIndex).Trim();
         }
     }
 
