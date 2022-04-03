@@ -109,5 +109,38 @@ namespace HDL_Converter_Test
             Assert.IsTrue(value == param.value);
         }
 
+        [TestMethod]
+        public void test_initializeFormHDLCode_standalone()
+        {
+            string path = "@../../../../../Test_data/Verilog_InitFromHDL_Standalone.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            for (int i = 0; i < fileContent.Length; i += 3)
+            { 
+                PATCH_STANDALONEINIT_VeriModule test = new PATCH_STANDALONEINIT_VeriModule(fileContent[i], fileContent[i + 1], fileContent[i + 2]);
+            }
+        }
+
+    }
+
+    public class PATCH_STANDALONEINIT_VeriModule : VeriModule
+    {
+        string resultParam;
+        string resultWire;
+        public PATCH_STANDALONEINIT_VeriModule(string hdlCode, string resultParam, string resultWire)
+        {
+            this.resultParam = resultParam;
+            this.resultWire = resultWire;
+            this.initializeFormHDLCode(hdlCode);
+        }
+
+        protected override void initializeParameters(string hdlCode)
+        {
+            Assert.IsTrue(hdlCode == resultParam);
+        }
+
+        protected override void initializeWires(string hdlCode)
+        {
+            Assert.IsTrue(hdlCode == resultWire);
+        }
     }
 }

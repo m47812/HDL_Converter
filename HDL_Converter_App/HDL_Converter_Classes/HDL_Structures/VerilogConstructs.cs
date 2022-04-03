@@ -25,19 +25,19 @@ namespace HDL_Converter_Classes.HDL_Structures
                 string checkParamTag = hdlCode.Substring(0, topParenthesis.Item1);
                 if (checkParamTag.Contains("#"))
                 {
-                    initializeParameters(hdlCode.Substring(topParenthesis.Item1, topParenthesis.Item2));
+                    initializeParameters(hdlCode.Substring(topParenthesis.Item1+1, topParenthesis.Item2 - topParenthesis.Item1-1));
                     string remainingHDL = hdlCode.Substring((topParenthesis.Item2) + 1);
                     Tuple<int, int> wiresec = this.getTopParenteses('(', ')', remainingHDL);
-                    wireSection = remainingHDL.Substring(wiresec.Item1, wiresec.Item2);
+                    wireSection = remainingHDL.Substring(wiresec.Item1+1, wiresec.Item2-wiresec.Item1-1);
                 }
                 else
                 {
-                    wireSection = hdlCode.Substring(topParenthesis.Item1, topParenthesis.Item2);
+                    wireSection = hdlCode.Substring(topParenthesis.Item1+1, topParenthesis.Item2 - topParenthesis.Item1-1);
                 }
             }
             else
             {
-                wireSection = hdlCode.Substring(topParenthesis.Item1, topParenthesis.Item2);
+                wireSection = hdlCode.Substring(topParenthesis.Item1+1, topParenthesis.Item2 - topParenthesis.Item1-1);
             }
             initializeWires(wireSection);
         }
@@ -169,7 +169,7 @@ namespace HDL_Converter_Classes.HDL_Structures
             int valueIndex = codeLine.IndexOf('=');
             this.value = codeLine.Substring(valueIndex + 1).Trim();
             int paramIndex = codeLine.ToLower().IndexOf("parameter")+9;
-            this.name = codeLine.Substring(paramIndex, valueIndex - 1- paramIndex).Trim();
+            this.name = codeLine.Substring(paramIndex, valueIndex - 1-paramIndex).Trim();
         }
     }
 
