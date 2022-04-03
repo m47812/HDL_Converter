@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1433
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDL_Converter_Core", "HDL_Converter_Core\HDL_Converter_Core.csproj", "{7C07793C-0004-4F74-BA39-F37B25D09EEB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDL_Converter_GUI", "HDL_Converter_GUI\HDL_Converter_GUI.csproj", "{BBE49AA4-5CB0-4609-A7FD-F84E27C90A10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDL_Converter_Classes", "HDL_Converter_Classes\HDL_Converter_Classes.csproj", "{E840E66A-1E38-4178-BC8D-D4B54779F96D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDL_Converter_Classes", "HDL_Converter_Classes\HDL_Converter_Classes.csproj", "{E840E66A-1E38-4178-BC8D-D4B54779F96D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDL_Converter_Test", "HDL_Converter_Test\HDL_Converter_Test.csproj", "{CA704D5E-DD5C-4FE8-9AEF-50B04DD930FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{E840E66A-1E38-4178-BC8D-D4B54779F96D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E840E66A-1E38-4178-BC8D-D4B54779F96D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E840E66A-1E38-4178-BC8D-D4B54779F96D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA704D5E-DD5C-4FE8-9AEF-50B04DD930FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA704D5E-DD5C-4FE8-9AEF-50B04DD930FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA704D5E-DD5C-4FE8-9AEF-50B04DD930FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA704D5E-DD5C-4FE8-9AEF-50B04DD930FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,7 +6,7 @@ using System.Linq;
 namespace HDL_Converter_Classes.HDL_Structures
 {
 
-    class VeriModule : HDLModule
+    public class VeriModule : HDLModule
     {
 
         public VeriModule() { }
@@ -58,7 +58,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// <summary>
     /// A Wire in the Verilog domain serving as an IO to a module
     /// </summary>
-    class VeriWire : Wire
+    public class VeriWire : Wire
     {
         /// <summary>
         /// Separates a string of HDL Code into Wire Components
@@ -129,7 +129,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// <summary>
     /// A Parameter in the Verilog domain serving as a configuration parameter for the module
     /// </summary>
-    class VeriParameter : Parameter
+    public class VeriParameter : Parameter
     {
         public override string generateInstantiationLine()
         {
@@ -147,7 +147,7 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateWireDeclarationLine()
         {
-            return "localparam  " + this.name +" = "+this.value+ ";";
+            return "localparam " + this.name +" = "+this.value+ ";";
         }
     }
 }
