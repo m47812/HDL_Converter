@@ -77,11 +77,12 @@ namespace HDL_Converter_Classes.HDL_Structures
                 if (splited[i].Replace(System.Environment.NewLine," ").Trim() [0] == '/')
                 {
                     string[] splitedAtNewLine = splited[i].Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                    retData.Last()[1] = splitedAtNewLine[0];
+                    retData.Last()[1] = splitedAtNewLine[0].Trim();
                     if (splitedAtNewLine.Length > 1)
                     {
                         string[] nextEntry = new string[2];
                         nextEntry[0] = splitedAtNewLine[1];
+                        nextEntry[1] = "";
                         retData.Add(nextEntry);
                     }
                 }
@@ -89,8 +90,20 @@ namespace HDL_Converter_Classes.HDL_Structures
                 {
                     string[] nextEntry = new string[2];
                     nextEntry[0] = splited[i].Replace(System.Environment.NewLine, " ").Trim();
+                    nextEntry[1] = "";
                     retData.Add(nextEntry);
                 }
+            }
+
+            //Since Verilog does not have a "," for the last element comment and code
+            //would end up in one string this if statement checks for and corrects this.
+            if (retData.Last()[0].Contains("//"))
+            {
+                string[] correctedLastElement = retData.Last()[0].Split('/');
+                retData.Last()[0] = correctedLastElement[0].Trim();
+                string lastComment = "";
+                for (int i = 2; i < correctedLastElement.Length; i++) lastComment += correctedLastElement[i];
+                retData.Last()[1] = "//"+lastComment;
             }
             return retData;
         }

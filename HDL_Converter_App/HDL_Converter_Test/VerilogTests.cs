@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HDL_Converter_Classes.HDL_Structures;
+using System.Collections.Generic;
 
 namespace HDL_Converter_Test
 {
@@ -63,5 +64,23 @@ namespace HDL_Converter_Test
             generated = param.generateInstantiationLine();
             Assert.IsTrue(resultWithout.Equals(generated));
         }
+
+        [TestMethod]
+        public void test_veriwire_separate_elements()
+        {
+            string path = "@../../../../../Test_data/Verilog_Wire_Separate_Elements.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            for(int i = 0; i < fileContent.Length; i += 2)
+            {
+                List<string[]> computed = VeriWire.separateElements(fileContent[i]);
+                string[] expected = fileContent[i + 1].Split('|');
+                for(int j = 0; j < expected.Length; j++)
+                {
+                    string res = computed[j / 2][j % 2];
+                    Assert.IsTrue(res.Equals(expected[j]));
+                }
+            }
+        }
+
     }
 }
