@@ -120,6 +120,34 @@ namespace HDL_Converter_Test
             }
         }
 
+        [TestMethod]
+        public void test_initializeFormHDLCode_full()
+        {
+            string path = "@../../../../../Test_data/Verilog_InitFromHDL_Standalone.txt";
+            string moduleString = GeneralTests.load_testdata_from_file(path)[0];
+            VeriModule module = new VeriModule(moduleString);
+            Assert.IsTrue(module.wires.Count == 4);
+            Assert.IsTrue(module.parameters.Count == 2);
+            string[] busSizes = { "", "", "[7:0]","" };
+            PortDirection[] directions = { PortDirection.Input, PortDirection.Input, PortDirection.Output, PortDirection.InOut };
+            string[] wireNames = { "clock", "reset", "busOut", "someSignal" };
+            string[] wireComments = { "", "Comment", "", "Comment" };
+            for(int i = 0; i < 4; i++)
+            {
+                Assert.IsTrue(busSizes[i] == module.wires[i].busSize);
+                Assert.IsTrue(directions[i] == module.wires[i].direction);
+                Assert.IsTrue(wireNames[i] == module.wires[i].name);
+                Assert.IsTrue(wireComments[i] == module.wires[i].comment);
+            }
+            string[] paramNames = { "myParam1", "myParam2" };
+            string[] paramValues = { "12", "2" };
+            for(int i = 0; i < 2; i++)
+            {
+                Assert.IsTrue(paramNames[i] == module.parameters[i].name);
+                Assert.IsTrue(paramValues[i] == module.parameters[i].value);
+            }
+        }
+
     }
 
     public class PATCH_STANDALONEINIT_VeriModule : VeriModule

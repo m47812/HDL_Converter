@@ -44,12 +44,34 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         protected override void initializeParameters(string hdlCode)
         {
-            throw new NotImplementedException();
+            List<string[]> paramRaw = VeriDataProcessing.separateElements(hdlCode);
+            this.parameters = new List<Parameter>();
+            foreach(string[] parLine in paramRaw)
+            {
+                if(parLine[0] != "")
+                {
+                    VeriParameter param = new VeriParameter();
+                    param.comment = parLine[1];
+                    param.initializeFromCodeLine(parLine[0]);
+                    this.parameters.Add(param);
+                }
+            }
         }
 
         protected override void initializeWires(string hdlCode)
         {
-            throw new NotImplementedException();
+            List<string[]> wiresRaw = VeriDataProcessing.separateElements(hdlCode);
+            this.wires = new List<Wire>();
+            foreach (string[] wireLine in wiresRaw)
+            {
+                if (wireLine[0] != "")
+                {
+                    VeriWire wire = new VeriWire();
+                    wire.comment = wireLine[1];
+                    wire.initializeFromCodeLine(wireLine[0]);
+                    this.wires.Add(wire);
+                }
+            }
         }
 
     
