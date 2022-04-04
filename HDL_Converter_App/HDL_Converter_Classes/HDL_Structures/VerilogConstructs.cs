@@ -11,8 +11,9 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public VeriModule() { }
 
-        public VeriModule(string hdlModule)
+        public VeriModule(string hdlModule, Settings settings)
         {
+            this.settings = settings;
             this.initializeFormHDLCode(hdlModule);
         }
 
@@ -23,7 +24,15 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateWireDeclaration()
         {
-            throw new NotImplementedException();
+            string outputString = "";
+            int lastItemCheck = this.wires.Count;
+            foreach(VeriWire wire in this.wires)
+            {
+                lastItemCheck--;
+                outputString += wire.generateWireDeclarationLine() + wire.buildComment();
+                if (lastItemCheck != 0) outputString += System.Environment.NewLine;
+            }
+            return outputString;
         }
 
         protected override void initializeFormHDLCode(string hdlCode)
@@ -65,6 +74,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                 if(parLine[0] != "")
                 {
                     VeriParameter param = new VeriParameter();
+                    param.settings = this.settings;
                     param.comment = parLine[1];
                     param.initializeFromCodeLine(parLine[0]);
                     this.parameters.Add(param);
@@ -81,6 +91,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                 if (wireLine[0] != "")
                 {
                     VeriWire wire = new VeriWire();
+                    wire.settings = this.settings;
                     wire.comment = wireLine[1];
                     wire.initializeFromCodeLine(wireLine[0]);
                     this.wires.Add(wire);
@@ -95,7 +106,8 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// A Wire in the Verilog domain serving as an IO to a module
     /// </summary>
     public class VeriWire : Wire
-    {        
+    {
+
         /// <summary>
         /// Generates the module instantiation line for one wire
         /// </summary>
@@ -177,6 +189,29 @@ namespace HDL_Converter_Classes.HDL_Structures
                 this.name = codeLine.Substring(regIndex >= 3? regIndex : nameIndex).Trim();
             }            
         }
+
+        public override string buildComment()
+        {
+            int commentType = settings.includeInputComments ? 1 : 0;
+            if (settings.addWireDirectionComment) commentType += 2;
+            if (this.comment == "" && commentType > 0) commentType -= 1;
+            string outComment = " //";
+            switch (commentType)
+            {
+                case 0:
+                    return "";
+                case 1:
+                    outComment += this.comment;
+                    break;
+                case 2:
+                    outComment += this.direction.ToString() + ' ' + this.busSize;
+                    break;
+                case 3:
+                    outComment += this.direction.ToString() + ' ' + this.busSize + " | " + this.comment;
+                    break;
+            }
+            return outComment;
+        }
     }
 
     /// <summary>
@@ -184,7 +219,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VeriParameter : Parameter
     {
-        
+
         public override string generateInstantiationLine()
         {
             string commandLine;
@@ -214,6 +249,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             this.value = codeLine.Substring(valueIndex + 1).Trim();
             int paramIndex = codeLine.ToLower().IndexOf("parameter")+9;
             this.name = codeLine.Substring(paramIndex, valueIndex - 1-paramIndex).Trim();
+        }
+        public override string buildComment()
+        {
+            throw new NotImplementedException();
         }
     }
 

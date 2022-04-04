@@ -16,12 +16,13 @@ namespace HDL_Converter_GUI
     /// </summary>
     public class GUIController
     {
-        private Converter converter = new Converter();
+        private Converter converter;
         private Settings settings = new Settings();
         private InputPanel inputPanel;
 
         public GUIController(InputPanel inputPanel) 
         {
+            converter = new Converter(this.settings);
             this.inputPanel = inputPanel;
             converter.settings = this.settings;
         }
@@ -35,8 +36,8 @@ namespace HDL_Converter_GUI
             if (inputHDL != null)
             {
                 converter.hdlInput = inputHDL;
-                converter.generateWireDeclaration();
-                //TODO Return Result
+                string declaration = converter.generateWireDeclaration();
+                System.Windows.Clipboard.SetText(declaration);
             }
             else
             {

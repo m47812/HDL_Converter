@@ -20,6 +20,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     public abstract class HDLModule
     {
         public string name;
+        public Settings settings;
         public List<Parameter> parameters;
         public List<Wire> wires;
 
@@ -118,6 +119,13 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// </summary>
         /// <returns></returns>
         public abstract string generateWireDeclarationLine();
+
+        /// <summary>
+        /// Generates the comment to add at the end of the line dependant on the setting
+        /// configured in the settings attribute.
+        /// </summary>
+        /// <returns>A coment for the line e.g. "//output [7:0] | my Comment"</returns>
+        public abstract string buildComment();
 
     }
 
