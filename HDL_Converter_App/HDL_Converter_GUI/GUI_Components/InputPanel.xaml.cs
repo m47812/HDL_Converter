@@ -26,6 +26,11 @@ namespace HDL_Converter_GUI.GUI_Components
             InitializeComponent();
         }
 
+        public void registerSettings(Settings settings)
+        {
+            this.settingsPanel.registerSettings(settings);
+        }
+
         public string getHDLInput()
         {
             string hdlCode = tbHDLInput.Text;

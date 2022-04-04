@@ -25,6 +25,7 @@ namespace HDL_Converter_GUI
             converter = new Converter(this.settings);
             this.inputPanel = inputPanel;
             converter.settings = this.settings;
+            inputPanel.registerSettings(settings);
         }
 
         /// <summary>

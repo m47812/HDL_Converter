@@ -14,12 +14,12 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <GroupBox Header="Select HDL Language" FontSize="12" Margin="0,2,0,2">
-                <ComboBox Margin="0,5,0,5">
+                <ComboBox x:Name="cbbLanguage" Margin="0,5,0,5" SelectionChanged="ComboBox_SelectionChanged" SelectedIndex="0">
                     <ComboBoxItem Content="Verilog"/>
                     <ComboBoxItem Content="VHDL"/>
                 </ComboBox>
             </GroupBox>
-            <CheckBox x:Name="cbEmptyIO" Grid.Row="1" FontSize="12" Margin="0,5,0,5">
+            <CheckBox x:Name="cbEmptyIO" Grid.Row="1" FontSize="12" Margin="8,5,0,5" Checked="CbEmptyIO_Checked" Unchecked="CbEmptyIO_Checked">
                 Empty IOs
             </CheckBox>
             <GroupBox Header="Include Comment Settings" Grid.Row="2" FontSize="12">
@@ -28,10 +28,10 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <CheckBox x:Name="cbPrevComments" Grid.Row="0">
+                    <CheckBox x:Name="cbPrevComments" Grid.Row="0" Checked="CbPrevComments_Checked" Unchecked="CbPrevComments_Checked">
                         Include input comments
                     </CheckBox>
-                    <CheckBox x:Name="cbDirectionComments" Grid.Row="1">
+                    <CheckBox x:Name="cbDirectionComments" Grid.Row="1" Checked="CbDirectionComments_Checked" Unchecked="CbDirectionComments_Checked">
                         Add direction comments
                     </CheckBox>
                 </Grid>

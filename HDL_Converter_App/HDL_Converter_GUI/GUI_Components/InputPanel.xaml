@@ -20,7 +20,7 @@
 
                 </TextBox>
             </GroupBox>
-            <local:SettingsPanel Grid.Column="1"/>
+            <local:SettingsPanel x:Name="settingsPanel" Grid.Column="1"/>
         </Grid>
     </GroupBox>
 </UserControl>

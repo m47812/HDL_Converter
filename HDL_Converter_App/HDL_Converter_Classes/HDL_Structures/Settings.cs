@@ -33,7 +33,7 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// <summary>
         /// Defines if comments schall be added in the instantiation
         /// </summary>
-        public bool includeInputComments = true;
-        public bool addWireDirectionComment = true;
+        public bool includeInputComments = false;
+        public bool addWireDirectionComment = false;
     }
 }
