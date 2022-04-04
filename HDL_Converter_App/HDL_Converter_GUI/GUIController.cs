@@ -55,8 +55,8 @@ namespace HDL_Converter_GUI
             if(inputHDL != null)
             {
                 converter.hdlInput = inputHDL;
-                converter.generateModuleInstantiation();
-                //TODO Return Result
+                string instantiation = converter.generateModuleInstantiation();
+                System.Windows.Clipboard.SetText(instantiation);
             }
             else
             {

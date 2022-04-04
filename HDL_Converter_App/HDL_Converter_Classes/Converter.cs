@@ -63,7 +63,7 @@ namespace HDL_Converter_Classes
         public string generateModuleInstantiation()
         {
             if (!inputProcessed) this.processInputHDL();
-            return null; //Make Compiler Happy (Placeholder)
+            return module.generateModuleInstantiation();
         }
 
         private void processInputHDL()

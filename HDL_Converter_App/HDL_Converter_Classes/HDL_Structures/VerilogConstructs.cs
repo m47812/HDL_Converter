@@ -19,7 +19,27 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateModuleInstantiation()
         {
-            throw new NotImplementedException();
+            string outputString = this.name + " inst_" + this.name + System.Environment.NewLine;
+            List<ModuleComponent>[] components = new List<ModuleComponent>[2]
+            { this.parameters.Cast<ModuleComponent>().ToList(), this.wires.Cast<ModuleComponent>().ToList()};
+            if (!(this.parameters is null)) outputString += '#';
+            foreach(List<ModuleComponent> component in components)
+            {       
+                if (!(component is null))
+                {
+                    outputString += '('+ System.Environment.NewLine;
+                    int lastCounter = component.Count;
+                    foreach(ModuleComponent elem in component)
+                    {
+                        lastCounter--;
+                        outputString += "\t"+ elem.generateInstantiationLine() +(lastCounter==0?"":",")
+                            + elem.buildComment() + System.Environment.NewLine;
+                    }
+                    outputString += ')';
+                }
+            }
+            outputString += ';';
+            return outputString;
         }
 
         public override string generateWireDeclaration()
@@ -252,7 +272,8 @@ namespace HDL_Converter_Classes.HDL_Structures
         }
         public override string buildComment()
         {
-            throw new NotImplementedException();
+            if (settings.includeInputComments) return (" //" + this.comment);
+            else return "";
         }
     }
 
