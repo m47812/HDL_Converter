@@ -157,8 +157,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             else
             {
                 this.busSize = "";
-                int nameIndex = codeLine.ToLower().IndexOf("wire")+4;
-                this.name = codeLine.Substring(nameIndex).Trim();
+                string lowerCodeline = codeLine.ToLower();
+                int nameIndex = lowerCodeline.IndexOf("wire")+4;
+                int regIndex = lowerCodeline.IndexOf("reg") + 3;
+                this.name = codeLine.Substring(regIndex >= 3? regIndex : nameIndex).Trim();
             }            
         }
     }
