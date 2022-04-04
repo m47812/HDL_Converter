@@ -23,8 +23,10 @@ namespace HDL_Converter_GUI
     public partial class MainWindow : Window
     {
         public MainWindow()
-        {
+        {           
             InitializeComponent();
+            GUIController controller = new GUIController(paInput);
+            paSelectOutput.registerGUIController(controller);
         }
     }
 }

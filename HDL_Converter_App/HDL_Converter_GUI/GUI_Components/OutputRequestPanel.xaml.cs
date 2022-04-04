@@ -20,9 +20,26 @@ namespace HDL_Converter_GUI.GUI_Components
     /// </summary>
     public partial class OutputRequestPanel : UserControl
     {
+        private GUIController controller;
+
         public OutputRequestPanel()
         {
             InitializeComponent();
+        }
+
+        public void registerGUIController(GUIController controller)
+        {
+            this.controller = controller;
+        }
+
+        private void btGenerateInstantiation_Click(object sender, RoutedEventArgs e)
+        {
+            controller.generateModuleInstantiationRequest();
+        }
+
+        private void btGenerateWireDeclaration_Click(object sender, RoutedEventArgs e)
+        {
+            controller.generateWireDeclarationRequest();
         }
     }
 }

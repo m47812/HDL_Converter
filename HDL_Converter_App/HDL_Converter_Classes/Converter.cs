@@ -42,6 +42,11 @@ namespace HDL_Converter_Classes
         /// </summary>
         private bool inputProcessed = false;
 
+        /// <summary>
+        /// Containes the processed HDL Input Code
+        /// </summary>
+        private HDLModule module;
+
         
 
         public string generateWireDeclaration()
@@ -61,6 +66,7 @@ namespace HDL_Converter_Classes
             switch (settings.language)
             {
                 case HDLLanguage.Verilog:
+                    this.module = new VeriModule(this.hdlInput);
                     break;
                 default:
                     throw new NotImplementedException("HDL Language not supported");

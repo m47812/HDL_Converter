@@ -18,7 +18,7 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// <summary>
         /// Defines the HDL Language that is used (given by the Input HDL)
         /// </summary>
-        public HDLLanguage language;
+        public HDLLanguage language = HDLLanguage.Verilog;
         /// <summary>
         /// Defines if module instantiation will be empty or containing a wire of the same name.
         /// </summary>
