@@ -206,7 +206,17 @@ namespace HDL_Converter_Classes.HDL_Structures
                 string lowerCodeline = codeLine.ToLower();
                 int nameIndex = lowerCodeline.IndexOf("wire")+4;
                 int regIndex = lowerCodeline.IndexOf("reg") + 3;
-                this.name = codeLine.Substring(regIndex >= 3? regIndex : nameIndex).Trim();
+                if(regIndex >= 3)
+                {
+                    this.name = codeLine.Substring(regIndex).Trim();
+                }else if(nameIndex >= 4)
+                {
+                    this.name = codeLine.Substring(nameIndex).Trim();
+                }
+                else
+                {
+                    this.name = codeLine.Substring(codeLine.Trim().IndexOf(' ')).Trim();
+                }
             }            
         }
 

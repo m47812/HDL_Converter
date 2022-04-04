@@ -88,6 +88,7 @@ namespace HDL_Converter_Test
         [DataRow("InOut Wire[8:0] myWire", "myWire", "[8:0]", PortDirection.InOut)]
         [DataRow("output reg states", "states", "", PortDirection.Output)]
         [DataRow("(*mark_debug = \"true\" *) input wire[1:0] states", "states","[1:0]",PortDirection.Input)]
+        [DataRow("input states", "states", "", PortDirection.Input)]
         [DataTestMethod]
         public void test_veriwire_initialize_from_codeline(string codeLine, 
             string name, string busSize, PortDirection direction)
@@ -127,7 +128,7 @@ namespace HDL_Converter_Test
         {
             string path = "@../../../../../Test_data/Verilog_InitFromHDL_Standalone.txt";
             string moduleString = GeneralTests.load_testdata_from_file(path)[0];
-            VeriModule module = new VeriModule(moduleString);
+            VeriModule module = new VeriModule(moduleString, new Settings());
             Assert.IsTrue(module.wires.Count == 4);
             Assert.IsTrue(module.parameters.Count == 2);
             string[] busSizes = { "", "", "[7:0]","" };
