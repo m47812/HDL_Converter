@@ -118,6 +118,12 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// <param name="codeLine">HDL Code for one Wire or Parameter without comment (output format of separate elements function)</param>
         public override void initializeFromCodeLine(string codeLine)
         {
+            if (codeLine.Contains("(*"))
+            {
+                //Removes the Mark Debug Statement from IDE
+                int removeIndex = codeLine.IndexOf("*)");
+                codeLine = codeLine.Substring(removeIndex + 2).Trim();
+            }
             string[] lowerData = codeLine.ToLower().Split(' ');
             if (lowerData[0].Contains("input"))
             {
