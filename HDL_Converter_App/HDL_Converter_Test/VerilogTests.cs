@@ -86,6 +86,8 @@ namespace HDL_Converter_Test
         [DataRow("Input wire [7:0] myBus", "myBus", "[7:0]", PortDirection.Input)]
         [DataRow("output wire myWire", "myWire", "", PortDirection.Output)]
         [DataRow("InOut Wire[8:0] myWire", "myWire", "[8:0]", PortDirection.InOut)]
+        [DataRow("output reg[1:0] states", "states", "[1:0]", PortDirection.Output)]
+        [DataRow("(*mark_debug = \"true\" *) input wire[1:0] states", "states","[1:0]",PortDirection.Input)]
         [DataTestMethod]
         public void test_veriwire_initialize_from_codeline(string codeLine, 
             string name, string busSize, PortDirection direction)
