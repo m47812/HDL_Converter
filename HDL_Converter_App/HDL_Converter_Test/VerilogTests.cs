@@ -148,6 +148,7 @@ namespace HDL_Converter_Test
                 Assert.IsTrue(paramNames[i] == module.parameters[i].name);
                 Assert.IsTrue(paramValues[i] == module.parameters[i].value);
             }
+            Assert.IsTrue(module.name == "test");
         }
 
     }

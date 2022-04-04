@@ -19,12 +19,15 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public abstract class HDLModule
     {
+        public string name;
         public List<Parameter> parameters;
         public List<Wire> wires;
 
         protected abstract void initializeFormHDLCode(string hdlCode);
         protected abstract void initializeParameters(string hdlCode);
         protected abstract void initializeWires(string hdlCode);
+        public abstract string generateWireDeclaration();
+        public abstract string generateModuleInstantiation();
 
         /// <summary>
         /// Calculates the open and close index of the top parentheses. 

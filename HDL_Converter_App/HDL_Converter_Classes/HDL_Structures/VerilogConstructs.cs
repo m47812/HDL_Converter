@@ -16,8 +16,22 @@ namespace HDL_Converter_Classes.HDL_Structures
             this.initializeFormHDLCode(hdlModule);
         }
 
+        public override string generateModuleInstantiation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateWireDeclaration()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void initializeFormHDLCode(string hdlCode)
         {
+            int nameIndexStart = hdlCode.ToLower().IndexOf("module") + 6;
+            int nameIndexEnd = hdlCode.IndexOf('(') - 1;
+            this.name = hdlCode.Substring(nameIndexStart, nameIndexEnd - nameIndexStart).
+                Replace('#', ' ').Replace(System.Environment.NewLine, " ").Trim();
             Tuple<int, int> topParenthesis = this.getTopParenteses('(', ')', hdlCode);
             string wireSection;
             if(topParenthesis.Item1 != 0)

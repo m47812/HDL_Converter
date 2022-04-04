@@ -86,5 +86,15 @@ namespace HDL_Converter_Test
         {
             throw new System.NotImplementedException();
         }
+
+        public override string generateModuleInstantiation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateWireDeclaration()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
