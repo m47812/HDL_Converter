@@ -21,8 +21,8 @@ namespace HDL_Converter_Classes.HDL_Structures
     {
         public string name;
         public Settings settings;
-        public List<Parameter> parameters;
-        public List<Wire> wires;
+        public List<Parameter> parameters = new List<Parameter>();
+        public List<Wire> wires = new List<Wire>();
 
         protected abstract void initializeFormHDLCode(string hdlCode);
         protected abstract void initializeParameters(string hdlCode);

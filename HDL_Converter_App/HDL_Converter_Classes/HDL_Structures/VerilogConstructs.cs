@@ -22,10 +22,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             string outputString = this.name + " inst_" + this.name + System.Environment.NewLine;
             List<ModuleComponent>[] components = new List<ModuleComponent>[2]
             { this.parameters.Cast<ModuleComponent>().ToList(), this.wires.Cast<ModuleComponent>().ToList()};
-            if (!(this.parameters is null)) outputString += '#';
+            if (this.parameters.Count != 0) outputString += '#';
             foreach(List<ModuleComponent> component in components)
             {       
-                if (!(component is null))
+                if (component.Count != 0)
                 {
                     outputString += '('+ System.Environment.NewLine;
                     int lastCounter = component.Count;
@@ -272,7 +272,7 @@ namespace HDL_Converter_Classes.HDL_Structures
         }
         public override string buildComment()
         {
-            if (settings.includeInputComments) return (" //" + this.comment);
+            if (settings.includeInputComments && this.comment != "") return (" //" + this.comment);
             else return "";
         }
     }
