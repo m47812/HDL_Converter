@@ -20,7 +20,7 @@
             </Grid.RowDefinitions>
             <Button x:Name="btGenerateInstantiation" Margin="5,5" Background="#FFBACEDE" FontSize="16" Grid.ColumnSpan="2" Content="Generate Instantiation" Click="btGenerateInstantiation_Click" />
             <Button x:Name="btGenerateWireDeclaration" Grid.Column="2" Margin="5,5" Background="#FFBACEDE" FontSize="16" Content="Generate Wire Declaration" Click="btGenerateWireDeclaration_Click" />
-            <Label Content="Hello" x:Name="laOutputText" Grid.ColumnSpan="3" Grid.Row="1"/>
+            <Label x:Name="laOutputText" Grid.ColumnSpan="3" Grid.Row="1" FontSize="16"/>
 
         </Grid>
     </GroupBox>

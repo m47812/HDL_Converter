@@ -30,6 +30,7 @@ namespace HDL_Converter_GUI.GUI_Components
         public void registerGUIController(GUIController controller)
         {
             this.controller = controller;
+            controller.informGUI += update_console;
         }
 
         private void btGenerateInstantiation_Click(object sender, RoutedEventArgs e)
@@ -40,6 +41,27 @@ namespace HDL_Converter_GUI.GUI_Components
         private void btGenerateWireDeclaration_Click(object sender, RoutedEventArgs e)
         {
             controller.generateWireDeclarationRequest();
+        }
+
+        private void update_console(object sender, EventArgs e)
+        {
+            GUIEvent eventData = sender as GUIEvent;
+            laOutputText.Content = eventData.text;
+            switch (eventData.severity)
+            {
+                case GUIEvent.Severity.Succsess:
+                    laOutputText.Foreground = Brushes.Green;
+                    break;
+                case GUIEvent.Severity.Error:
+                    laOutputText.Foreground = Brushes.Red;
+                    break;
+                case GUIEvent.Severity.Warning:
+                    laOutputText.Foreground = Brushes.OrangeRed;
+                    break;
+                default:
+                    laOutputText.Foreground = Brushes.Black;
+                    break;
+            }
         }
     }
 }
