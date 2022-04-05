@@ -30,6 +30,12 @@ A simple tool that can be used to convert the header syntax of a verilog module 
 [![Release](https://img.shields.io/badge/Latest%20Release-V1.0.0-green)](/releases/latest)
 
 You can finde the latest release versions executables [here](/releases/latest).
+
+### Installation
+Unpack the .zip file of the version you would like to use (Console or GUI) to the desired location on your disk. Keep all other files contained in the zip file in the same folder. To use the app simply run the .exe file contained in the downloaded zip file. 
+ 
+ **Note for Console App:** Note that, to run the Console app, you need the [.Net Core Runtime Environment](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) (Version 3.1) installed.
+
 For more information on how to use the Tool please refer to the user guides.
 - [Console App User Guide](/Documentation/2_User_Guide/CORE_APP_USER_GUIDE.md)
 - [GUI App User Guide](/Documentation/2_User_Guide/GUI_APP_USER_GUIDE.md)
