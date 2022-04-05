@@ -121,6 +121,7 @@ namespace HDL_Converter_Core
             {
                 string userInput = Console.ReadLine();
                 string set = "";
+                if (userInput == "") continue;
                 if (userInput.Length > 1) set += userInput[userInput.Length - 1];
                 switch (userInput[0])
                 {

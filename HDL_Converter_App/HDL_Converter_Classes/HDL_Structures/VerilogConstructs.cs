@@ -224,7 +224,7 @@ namespace HDL_Converter_Classes.HDL_Structures
         {
             int commentType = settings.includeInputComments ? 1 : 0;
             if (settings.addWireDirectionComment) commentType += 2;
-            if (this.comment == "" && commentType > 0) commentType -= 1;
+            if (this.comment == "" && commentType > 0 && commentType != 2) commentType -= 1;
             string outComment = " //";
             switch (commentType)
             {
