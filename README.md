@@ -1,4 +1,4 @@
-# HDL_Header_To_Instantiation
+# HDL Converter
 ![Title](/Documentation/1_Images/HDLConverterLogoSmall.png)
 
 [![License](https://img.shields.io/badge/License-AGPL_3.0-blue.svg)](/LICENSE)
