@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="HDL_Converter_GUI.GUI_Components.InputPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HDL_Converter_GUI.GUI_Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <GroupBox Header="Input" FontSize="20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Insert HDL Code Here" FontSize="14">
+                <TextBox x:Name="tbHDLInput" AcceptsReturn="True">
+
+                </TextBox>
+            </GroupBox>
+            <local:SettingsPanel x:Name="settingsPanel" Grid.Column="1"/>
+        </Grid>
+    </GroupBox>
+</UserControl>

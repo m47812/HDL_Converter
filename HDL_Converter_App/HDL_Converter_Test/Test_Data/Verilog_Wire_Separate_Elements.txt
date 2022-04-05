@@ -1,0 +1,24 @@
+﻿input wire we,
+input wire[4:0] addr,
+input wire[5:0] someSig,
+output wire[255:0] otherSig
+$input wire we||input wire[4:0] addr||input wire[5:0] someSig||output wire[255:0] otherSig|$
+input wire we, //Comment 1
+input wire[4:0] addr, //Comment 2
+input wire[5:0] someSig,
+output wire[255:0] otherSig //Comment 3
+$input wire we|Comment 1|input wire[4:0] addr|Comment 2|input wire[5:0] someSig||output wire[255:0] otherSig|Comment 3$
+input wire we, //I / wirte / more/ comm,ts
+input wire[4:0] addr, //Comment 2
+input wire[5:0] someSig //I / like / to /Implant, tese
+$input wire we|I / wirte / more/ comm,ts|input wire[4:0] addr|Comment 2|input wire[5:0] someSig|I / like / to /Implant, tese$
+input wire we,  input wire[4:0] addr, input wire[5:0] someSig, output wire[255:0] otherSig
+$input wire we||input wire[4:0] addr||input wire[5:0] someSig||output wire[255:0] otherSig|$
+parameter param1 = 12,
+parameter param2 = 2,
+parameter param3 = 'h0A
+$parameter param1 = 12||parameter param2 = 2||parameter param3 = 'h0A|$
+parameter param1 = 12, //Comment 1
+parameter param2 = 2,  
+parameter param3 = 'h0A  //Comment 2
+$parameter param1 = 12|Comment 1|parameter param2 = 2||parameter param3 = 'h0A|Comment 2

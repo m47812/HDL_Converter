@@ -1,0 +1,37 @@
+﻿module test
+#(
+parameter myParam1 = 12,
+parameter myParam2 = 2
+)
+(
+input wire clock,
+input wire reset, //Comment
+output wire [7:0] busOut,
+inout wire someSignal //Comment
+);
+$
+parameter myParam1 = 12,
+parameter myParam2 = 2
+$
+input wire clock,
+input wire reset, //Comment
+output wire [7:0] busOut,
+inout wire someSignal //Comment
+$
+module test
+(
+input wire clock,
+input wire reset, //Comment
+output wire [7:0] busOut,
+inout wire someSignal //Comment
+);
+$$
+input wire clock,
+input wire reset, //Comment
+output wire [7:0] busOut,
+inout wire someSignal //Comment
+$
+module test
+#(parameter myParam1 = 12, parameter myParam2 = 2)
+(input wire clock, input wire reset, output wire [7:0] busOut, inout wire someSignal);
+$parameter myParam1 = 12, parameter myParam2 = 2$input wire clock, input wire reset, output wire [7:0] busOut, inout wire someSignal
