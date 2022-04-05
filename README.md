@@ -27,9 +27,9 @@ A simple tool that can be used to convert the header syntax of a verilog module 
 
 
 ## How to Use
-[![Release](https://img.shields.io/badge/Latest%20Release-V1.0.0-green)](/releases/latest)
+[![Release](https://img.shields.io/badge/Latest%20Release-V1.0.0-green)](https://github.com/m47812/HDL_Converter/releases/latest)
 
-You can finde the latest release versions executables [here](/releases/latest).
+You can finde the latest release versions executables [here](https://github.com/m47812/HDL_Converter/releases/latest).
 
 ### Installation
 Unpack the .zip file of the version you would like to use (Console or GUI) to the desired location on your disk. Keep all other files contained in the zip file in the same folder. To use the app simply run the .exe file contained in the downloaded zip file. 
