@@ -1,10 +1,10 @@
-![Title](/Documentation/1_Images/HDLConverterLogoSmall.png)
 # HDL_Header_To_Instantiation
+![Title](/Documentation/1_Images/HDLConverterLogoSmall.png)
+
 [![License](https://img.shields.io/badge/License-AGPL_3.0-blue.svg)](/LICENSE)
 [![C#](https://img.shields.io/badge/Software-C%23-green)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 
 A simple tool that can be used to convert the header syntax of a verilog module to an instantiation syntax. The project is aimed at removing the need for tedious refactoring of module headers.
-
 
 ## Feature Overview
 **Language Support**
