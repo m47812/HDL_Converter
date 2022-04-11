@@ -83,23 +83,3 @@ The following Exceptions may be shown in the status output.
 | Uneven Parenteses                                                    | Module header provided did not have a matching numer of `(` and `)`                         | Please check your HDL input for correct syntax. The problem may also occure if parts of the RTL code with uneven parenteses  are contained in the input |
 | Wire had invalid data direction                                      | something went wrong with a data direction detection (can be `input`, `output` or `inout`)  | Please check the data directions used.                                                                                                                  |
 
-**Other causes of problems:**
-Programm crashes?
-You may have used a comment as the first line in the module (like shown in the code bellow).
-This is a know issue and will be patched soon until then please remove the first comment and try again.
-```verilog
-module test
-#(
-parameter myParam1 = 12,
-parameter myParam2 = 2
-)
-(
-//==========> !!!!THIS COMMENT IS A PROBLEM!!!! <<==============
-input wire clock, //No problem
-input wire reset,
-//This comment is fine
-output wire [7:0] busOut,
-inout wire someSignal
-//This is also ok
-);
-```
