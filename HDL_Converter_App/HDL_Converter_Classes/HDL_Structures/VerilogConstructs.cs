@@ -300,6 +300,10 @@ namespace HDL_Converter_Classes.HDL_Structures
         public static List<string[]> separateElements(string hdlCode)
         {
             List<string[]> retList = new List<string[]>();
+            string[] initialEntry = new string[2];
+            initialEntry[0] = "";
+            initialEntry[1] = "";
+            retList.Add(initialEntry);
             string[] hdlSplited = hdlCode.Replace("//", "//{Comment}").Split(new string[] { System.Environment.NewLine, "//" }, StringSplitOptions.None);
             foreach (string element in hdlSplited)
             {
