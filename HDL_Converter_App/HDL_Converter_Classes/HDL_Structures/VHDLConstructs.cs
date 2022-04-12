@@ -76,7 +76,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// <summary>
     /// A Wire in the VHDL (signal in VHDL) domain serving as an IO to a module
     /// </summary>
-    class VHDLWire : Wire
+    public class VHDLWire : Wire
     {
         public override string buildComment()
         {
@@ -140,9 +140,9 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// <summary>
     /// A Parameter in the VHDL domain (generic in VHDL) serving as a configuration parameter for the module
     /// </summary>
-    class VHDLParameter : Parameter
+    public class VHDLParameter : Parameter
     {
-        string dataType;
+        public string dataType;
         public override string buildComment()
         {
             if (settings.includeInputComments && this.comment != "") return (" --" + this.comment);
@@ -164,6 +164,7 @@ namespace HDL_Converter_Classes.HDL_Structures
             if (!codeLine.Contains(":")) throw new FormatException("Invalid File Line: " + codeLine);//Sanity Check
             string[] type_name_sep = codeLine.Split(':');
             this.name = type_name_sep[0].Trim();
+            type_name_sep[1] = type_name_sep.Length > 2 ? type_name_sep[1] + ':' + type_name_sep[2] : type_name_sep[1];
             if (type_name_sep[1].Contains(":="))
             {
                 string[] value_type_sep = type_name_sep[1].Split(new string[] { ":=" }, StringSplitOptions.None);
@@ -173,7 +174,7 @@ namespace HDL_Converter_Classes.HDL_Structures
             else
             {
                 this.value = "";
-                this.dataType = type_name_sep[1];
+                this.dataType = type_name_sep[1].Trim();
             }
         }
     }
