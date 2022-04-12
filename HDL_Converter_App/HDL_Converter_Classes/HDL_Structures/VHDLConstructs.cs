@@ -5,6 +5,23 @@ using System.Text;
 namespace HDL_Converter_Classes.HDL_Structures
 {
     /// <summary>
+    /// The Data Types of signals and generics in VHDL
+    /// Not used yet needed for Verilog <---> VHDL conversions 
+    /// </summary>
+    public enum VHDLDataTypes
+    {
+        UNKNOWN_TYPE = 0,
+        std_ulogic_vector = 1,
+        std_logic_vector = 2,
+        std_ulogic = 3,
+        std_logic = 4,
+        unsigned = 5,
+        signed = 6,
+        integer = 7,
+        natural = 8
+    }
+
+    /// <summary>
     /// A Module in VHDL (Entity) containing IO signals and generics
     /// </summary>
     class VHDLModule : HDLModule
@@ -63,7 +80,25 @@ namespace HDL_Converter_Classes.HDL_Structures
     {
         public override string buildComment()
         {
-            throw new NotImplementedException();
+            int commentType = settings.includeInputComments ? 1 : 0;
+            if (settings.addWireDirectionComment) commentType += 2;
+            if (this.comment == "" && commentType > 0 && commentType != 2) commentType -= 1;
+            string outComment = " --";
+            switch (commentType)
+            {
+                case 0:
+                    return "";
+                case 1:
+                    outComment += this.comment;
+                    break;
+                case 2:
+                    outComment += this.direction.ToString() + ' ' + this.busSize;
+                    break;
+                case 3:
+                    outComment += this.direction.ToString() + ' ' + this.busSize + " | " + this.comment;
+                    break;
+            }
+            return outComment;
         }
 
         public override string generateInstantiationLine()
@@ -78,7 +113,27 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override void initializeFromCodeLine(string codeLine)
         {
-            throw new NotImplementedException();
+            if (!codeLine.Contains(":")) throw new FormatException("Invalid File Line: " + codeLine);//Sanity Check
+            string[] type_name_sep = codeLine.Split(':');
+            this.name = type_name_sep[0].Trim();
+            string[] vec_dir_sep = type_name_sep[1].Trim().Split(new string[] { " " ,"\t"}, StringSplitOptions.RemoveEmptyEntries);
+            switch (vec_dir_sep[0].ToLower())
+            {
+                case "in":
+                    this.direction = PortDirection.Input;
+                    break;
+                case "out":
+                    this.direction = PortDirection.Output;
+                    break;
+                case "inout":
+                    this.direction = PortDirection.InOut;
+                    break;
+                default:
+                    throw new FormatException("Invalid data direction in line: " + codeLine);
+            }
+            this.busSize = "";
+            for (int i = 1; i < vec_dir_sep.Length; i++) this.busSize += vec_dir_sep[i] + " ";
+            this.busSize = this.busSize.Trim();
         }
     }
 
@@ -87,9 +142,11 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     class VHDLParameter : Parameter
     {
+        string dataType;
         public override string buildComment()
         {
-            throw new NotImplementedException();
+            if (settings.includeInputComments && this.comment != "") return (" --" + this.comment);
+            else return "";
         }
 
         public override string generateInstantiationLine()
@@ -104,7 +161,64 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override void initializeFromCodeLine(string codeLine)
         {
-            throw new NotImplementedException();
+            if (!codeLine.Contains(":")) throw new FormatException("Invalid File Line: " + codeLine);//Sanity Check
+            string[] type_name_sep = codeLine.Split(':');
+            this.name = type_name_sep[0].Trim();
+            if (type_name_sep[1].Contains(":="))
+            {
+                string[] value_type_sep = type_name_sep[1].Split(new string[] { ":=" }, StringSplitOptions.None);
+                this.value = value_type_sep[1].Trim();
+                this.dataType = value_type_sep[0].Trim();
+            }
+            else
+            {
+                this.value = "";
+                this.dataType = type_name_sep[1];
+            }
+        }
+    }
+
+    public static class VHDLDataProcessing
+    {
+        /// <summary>
+        /// Separates a string of HDL Code into Wire Components
+        /// </summary>
+        /// <param name="hdlCode">A HDL code segment (the part that is inbetween the parenthesi 
+        /// containing the module IO declaration
+        /// </param>
+        /// <returns>A List of string arrays each array containing the module code at index 0
+        /// and (if available) a comment at index 1</returns>
+        public static List<string[]> separateElements(string hdlCode)
+        {
+            List<string[]> retList = new List<string[]>();
+            string[] lineSeparatedHDL = hdlCode.Split(new string[] { System.Environment.NewLine}, StringSplitOptions.None);
+            foreach (string lineSepar in lineSeparatedHDL)
+            {
+                string line = lineSepar;
+                if (line[line.Length - 1] == ';') line = line.Remove(line.Length - 1);
+                if(line != "")
+                {
+                    string[] nextElement = new string[2];
+                    if (line.Contains("--"))
+                    {
+                        string[] data = line.Split(new string[] {"--"}, StringSplitOptions.None);
+                        nextElement[0] = data[0].Trim();
+                        nextElement[1] = "";
+                        for(int i = 1; i < data.Length; i++)
+                        {
+                            nextElement[1] += data[i];
+                            if (data.Length > 2 && i < (data.Length - 1)) nextElement[1] += "--"; //In case -- is used in the comment
+                        }  
+                    }
+                    else
+                    {
+                        nextElement[0] = line.Trim();
+                        nextElement[1] = "";
+                    }
+                    retList.Add(nextElement);
+                }
+            }
+            return retList;
         }
     }
 }
