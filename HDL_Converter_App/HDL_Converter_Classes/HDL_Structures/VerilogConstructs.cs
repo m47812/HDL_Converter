@@ -19,7 +19,7 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateModuleInstantiation()
         {
-            string outputString = this.name + " inst_" + this.name + System.Environment.NewLine;
+            string outputString = this.name + System.Environment.NewLine;
             List<ModuleComponent>[] components = new List<ModuleComponent>[2]
             { this.parameters.Cast<ModuleComponent>().ToList(), this.wires.Cast<ModuleComponent>().ToList()};
             if (this.parameters.Count != 0) outputString += '#';
@@ -37,6 +37,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                     }
                     outputString += ')';
                 }
+                outputString += System.Environment.NewLine + "inst_" + this.name + System.Environment.NewLine;
             }
             outputString += ';';
             return outputString;
