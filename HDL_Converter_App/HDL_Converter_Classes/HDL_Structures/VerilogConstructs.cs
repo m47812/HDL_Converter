@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using HDL_Converter_Classes.Properties;
 
 namespace HDL_Converter_Classes.HDL_Structures
 {
@@ -52,6 +53,30 @@ namespace HDL_Converter_Classes.HDL_Structures
             }
             outputString += ';';
             return outputString;
+        }
+
+        public override string generateTestbenchTopLevel()
+        {
+            string hdlCode = Resources.VERILOG_MODULE_SYNTAX;
+            hdlCode = hdlCode.Replace("$NAME$", this.name);
+            hdlCode = hdlCode.Replace("$WIREDECLARATIONS$", this.generateWireDeclaration());
+            hdlCode = hdlCode.Replace("$SECTIONCOMMENT$", "Module Instantiations");
+            hdlCode = hdlCode.Replace("$PORT$", "");
+            hdlCode = hdlCode.Replace("$PARAMETERS", "");
+
+            bool emtyIO = this.settings.emptyIOs;
+            this.settings.emptyIOs = false;
+            string instance = this.generateModuleInstantiation();
+            this.settings.emptyIOs = emtyIO;
+            string instanciation = instance.Replace("inst_" + this.name, "DUT") + System.Environment.NewLine
+                + System.Environment.NewLine + instance.Replace("inst_" + this.name, "Verify").Replace(this.name,"verify_"+this.name);
+            hdlCode = hdlCode.Replace("$INSTANCES$", instanciation);
+            return hdlCode;
+        }
+
+        public override string generateTestbenchVerify()
+        {
+            throw new NotImplementedException();
         }
 
         public override string generateWireDeclaration()
