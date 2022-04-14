@@ -75,6 +75,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                 Replace('#', ' ').Replace(System.Environment.NewLine, " ").Trim();
             Tuple<int, int> topParenthesis = this.getTopParenteses('(', ')', hdlCode);
             string wireSection;
+            string outsideDeclarationHDL;
             if(topParenthesis.Item1 != 0)
             {
                 string checkParamTag = hdlCode.Substring(0, topParenthesis.Item1);
@@ -84,17 +85,21 @@ namespace HDL_Converter_Classes.HDL_Structures
                     string remainingHDL = hdlCode.Substring((topParenthesis.Item2) + 1);
                     Tuple<int, int> wiresec = this.getTopParenteses('(', ')', remainingHDL);
                     wireSection = remainingHDL.Substring(wiresec.Item1+1, wiresec.Item2-wiresec.Item1-1);
+                    outsideDeclarationHDL = remainingHDL.Substring(wiresec.Item2 + 1);
                 }
                 else
                 {
                     wireSection = hdlCode.Substring(topParenthesis.Item1+1, topParenthesis.Item2 - topParenthesis.Item1-1);
+                    outsideDeclarationHDL = hdlCode.Substring(topParenthesis.Item2 + 1);
                 }
             }
             else
             {
                 wireSection = hdlCode.Substring(topParenthesis.Item1+1, topParenthesis.Item2 - topParenthesis.Item1-1);
+                outsideDeclarationHDL = hdlCode.Substring(topParenthesis.Item2 + 1);
             }
             initializeWires(wireSection);
+            initializeUnknownWires(outsideDeclarationHDL);
         }
 
         protected override void initializeParameters(string hdlCode)
@@ -131,6 +136,16 @@ namespace HDL_Converter_Classes.HDL_Structures
             }
         }
 
+        private void initializeUnknownWires(string remainingHDL)
+        {
+            foreach(VeriWire wire in this.wires)
+            {
+                if(wire.direction == PortDirection.UNKNOWN)
+                {
+                    wire.initializeUnknown(remainingHDL);
+                }
+            }
+        }
     
     }
 
@@ -237,6 +252,49 @@ namespace HDL_Converter_Classes.HDL_Structures
                     this.name = codeLine.Substring(codeLine.Trim().IndexOf(' ')).Trim();
                 }
             }            
+        }
+
+        /// <summary>
+        /// This function initializes the wire in the case that the module header 
+        /// does not contain data direction and bus size information.
+        /// </summary>
+        /// <param name="remainingHDL">HDL Code without the header</param>
+        /// <returns>true if function was successfull at finding direction information</returns>
+        public bool initializeUnknown(string remainingHDL)
+        {
+            int firstIndex = remainingHDL.IndexOf(this.name);
+            if (firstIndex == -1) return false;
+            for(int i = 1;firstIndex != i ; i++)
+            {
+                string information = remainingHDL.Substring(firstIndex - i, i);
+                if(information.Contains(System.Environment.NewLine) || information.Contains(';'))
+                {
+                    //Recursive if the first mention was not the direction information
+                    return this.initializeUnknown(remainingHDL.Substring(firstIndex + 1));
+                }
+                string l_info = information.ToLower();
+                if (l_info.Contains("input"))
+                {
+                    this.direction = PortDirection.Input;
+                }else if (l_info.Contains("output"))
+                {
+                    this.direction = PortDirection.Output;
+                }else if (l_info.Contains("inout"))
+                {
+                    this.direction = PortDirection.InOut;
+                }
+                if(this.direction != PortDirection.UNKNOWN)
+                {
+                    int openIndex = information.IndexOf('[');
+                    int closeIndex = information.IndexOf(']');
+                    if(openIndex != -1 && closeIndex != -1)
+                    {
+                        this.busSize = information.Substring(openIndex, closeIndex - openIndex +1);
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override string buildComment()
