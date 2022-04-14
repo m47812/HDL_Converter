@@ -8,9 +8,10 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// A enum for defining the data direction of a Wire
     /// </summary>
     public enum PortDirection{
-        Input = 0,
-        Output = 1,
-        InOut = 2
+        UNKNOWN = 0,
+        Input = 1,
+        Output = 2,
+        InOut = 3
     }
 
     /// <summary>
