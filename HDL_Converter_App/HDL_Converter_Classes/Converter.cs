@@ -66,6 +66,16 @@ namespace HDL_Converter_Classes
             return module.generateModuleInstantiation();
         }
 
+        public string generateTestbenchTopLevel()
+        {
+            if (!inputProcessed) this.processInputHDL();
+        }
+
+        public string generateTestbenchVerify()
+        {
+            if (!inputProcessed) this.processInputHDL();
+        }
+
         private void processInputHDL()
         {
             switch (settings.language)

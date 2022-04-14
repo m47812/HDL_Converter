@@ -30,6 +30,8 @@ namespace HDL_Converter_Classes.HDL_Structures
         protected abstract void initializeWires(string hdlCode);
         public abstract string generateWireDeclaration();
         public abstract string generateModuleInstantiation();
+        public abstract string generateTestbenchTopLevel();
+        public abstract string generateTestbenchVerify();
 
         /// <summary>
         /// Calculates the open and close index of the top parentheses. 
