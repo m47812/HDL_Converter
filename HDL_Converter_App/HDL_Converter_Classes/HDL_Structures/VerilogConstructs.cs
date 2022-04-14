@@ -19,14 +19,26 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateModuleInstantiation()
         {
-            string outputString = this.name + System.Environment.NewLine;
+            string outputString;
+            bool hasParameters;
+            if (this.parameters.Count > 0)
+            {
+                outputString = this.name + System.Environment.NewLine;
+                hasParameters = true;
+            }
+            else
+            {
+                outputString = this.name + " inst_"+this.name+ System.Environment.NewLine;
+                hasParameters = false;
+            }
             List<ModuleComponent>[] components = new List<ModuleComponent>[2]
             { this.parameters.Cast<ModuleComponent>().ToList(), this.wires.Cast<ModuleComponent>().ToList()};
             if (this.parameters.Count != 0) outputString += '#';
-            foreach(List<ModuleComponent> component in components)
-            {       
+            foreach (List<ModuleComponent> component in components)
+            {    
                 if (component.Count != 0)
                 {
+                    if(hasParameters && outputString.Last() != '#') outputString += System.Environment.NewLine + " inst_" + this.name + System.Environment.NewLine;
                     outputString += '('+ System.Environment.NewLine;
                     int lastCounter = component.Count;
                     foreach(ModuleComponent elem in component)
@@ -37,7 +49,6 @@ namespace HDL_Converter_Classes.HDL_Structures
                     }
                     outputString += ')';
                 }
-                outputString += System.Environment.NewLine + "inst_" + this.name + System.Environment.NewLine;
             }
             outputString += ';';
             return outputString;
@@ -171,7 +182,14 @@ namespace HDL_Converter_Classes.HDL_Structures
                 int removeIndex = codeLine.IndexOf("*)");
                 codeLine = codeLine.Substring(removeIndex + 2).Trim();
             }
-            string[] lowerData = codeLine.ToLower().Split(' ');
+            string[] lowerData = codeLine.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            //Covers the case that port direction and bus size is declared outside of header
+            if (lowerData.Length == 1)
+            {
+                this.name = codeLine.Trim();
+                this.direction = PortDirection.UNKNOWN;
+                return;
+            }
             if (lowerData[0].Contains("input"))
             {
                 this.direction = PortDirection.Input;
