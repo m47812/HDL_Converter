@@ -11,7 +11,16 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" MaxHeight="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="laFolderLocation" Content="No Folder Selected" Grid.ColumnSpan="2" />
+        <Button x:Name="btFolderDialog" Grid.Row="1"  Content="Target Folder Location" Margin="5,5,5,5" Click="click_folder_location"
+                Background="#FFBACEDE" FontSize="16"/>
+        <Button x:Name="btGenerateTestbench" Content="Generate Testbench" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" Click="click_generate_testbench"
+                Background="#FFBACEDE" FontSize="16" IsEnabled="False"/>
+
     </Grid>
 </UserControl>
