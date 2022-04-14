@@ -40,13 +40,13 @@ namespace HDL_Converter_GUI
         /// <summary>
         /// Gets raised by GUI Controller to notify GUI components of events happend in Backend.
         /// </summary>
-        public event EventHandler informGUI; 
+        public event EventHandler informGUI;
 
         private Converter converter;
         private Settings settings = new Settings();
         private InputPanel inputPanel;
 
-        public GUIController(InputPanel inputPanel) 
+        public GUIController(InputPanel inputPanel)
         {
             converter = new Converter(this.settings);
             this.inputPanel = inputPanel;
@@ -61,19 +61,12 @@ namespace HDL_Converter_GUI
         {
             try
             {
-                string inputHDL = inputPanel.getHDLInput();
-                if (inputHDL != null)
+                if (setupHDLInput())
                 {
-                    converter.hdlInput = inputHDL;
                     string declaration = converter.generateWireDeclaration();
                     System.Windows.Clipboard.SetText(declaration);
                     informGUI(new GUIEvent("Wire declaration copied to clipboard", GUIEvent.Severity.Succsess), new EventArgs());
-                }
-                else
-                {
-                    informGUI(new GUIEvent("No HDL Code provided! Please Insert HDL Code to convert into Textbox",
-                        GUIEvent.Severity.Warning), new EventArgs());
-                }
+                }           
             }
             catch (NotImplementedException)
             {
@@ -93,30 +86,47 @@ namespace HDL_Converter_GUI
         {
             try
             {
-                string inputHDL = inputPanel.getHDLInput();
-                if (inputHDL != null)
+                if (setupHDLInput())
                 {
-                    converter.hdlInput = inputHDL;
                     string instantiation = converter.generateModuleInstantiation();
                     System.Windows.Clipboard.SetText(instantiation);
                     informGUI(new GUIEvent("Module instantiation copied to clipboard", GUIEvent.Severity.Succsess), new EventArgs());
-                }
-                else
-                {
-                    informGUI(new GUIEvent("No HDL Code provided! Please Insert HDL Code to convert into Textbox",
-                        GUIEvent.Severity.Warning), new EventArgs());
-                }
+                } 
             }
             catch (NotImplementedException)
             {
                 informGUI(new GUIEvent("The configuration you selected is currently not suported",
                         GUIEvent.Severity.Error), new EventArgs());
             }
-            catch(FormatException e)
+            catch (FormatException e)
             {
-                informGUI(new GUIEvent(e.Message, GUIEvent.Severity.Error), new EventArgs()); 
+                informGUI(new GUIEvent(e.Message, GUIEvent.Severity.Error), new EventArgs());
             }
         }
 
+        public void generateTestbenchRequest(string path)
+        {
+            if (setupHDLInput())
+            {
+                string testbenchTop = converter.generateTestbenchTopLevel();
+                System.Windows.Clipboard.SetText(testbenchTop);
+            }
+        }
+
+        private bool setupHDLInput()
+        {
+            string inputHDL = inputPanel.getHDLInput();
+            if (inputHDL != null)
+            {
+                converter.hdlInput = inputHDL;
+                return true;
+            }
+            else
+            {
+                informGUI(new GUIEvent("No HDL Code provided! Please Insert HDL Code to convert into Textbox",
+                    GUIEvent.Severity.Warning), new EventArgs());
+                return false;
+            }
+        }
     }
 }

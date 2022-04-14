@@ -62,7 +62,8 @@ namespace HDL_Converter_Classes.HDL_Structures
             hdlCode = hdlCode.Replace("$WIREDECLARATIONS$", this.generateWireDeclaration());
             hdlCode = hdlCode.Replace("$SECTIONCOMMENT$", "Module Instantiations");
             hdlCode = hdlCode.Replace("$PORT$", "");
-            hdlCode = hdlCode.Replace("$PARAMETERS", "");
+            hdlCode = hdlCode.Replace("$PARAMETERS$", "");
+            hdlCode = hdlCode.Replace("$DATE$", System.DateTime.Now.ToString());
 
             bool emtyIO = this.settings.emptyIOs;
             this.settings.emptyIOs = false;

@@ -27,7 +27,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Testbench">
-                    <local:TestbenchControl/>
+                    <local:TestbenchControl x:Name="ucTestbenchPanel"/>
                 </TabItem>
             </TabControl>
             <Label x:Name="laOutputText" Grid.ColumnSpan="1" Grid.Row="1" FontSize="16"/>

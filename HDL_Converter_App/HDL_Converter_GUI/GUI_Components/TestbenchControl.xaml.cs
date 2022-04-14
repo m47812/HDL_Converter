@@ -20,10 +20,16 @@ namespace HDL_Converter_GUI.GUI_Components
     /// </summary>
     public partial class TestbenchControl : UserControl
     {
+        private GUIController controller;
         private string target_path;
         public TestbenchControl()
         {
             InitializeComponent();
+        }
+
+        public void registerGUIController(GUIController controller)
+        {
+            this.controller = controller;
         }
 
         private void click_folder_location(object sender, EventArgs e)
@@ -43,7 +49,7 @@ namespace HDL_Converter_GUI.GUI_Components
 
         private void click_generate_testbench(object sender, EventArgs e)
         {
-
+            this.controller.generateTestbenchRequest(this.target_path);
         }
     }
 }

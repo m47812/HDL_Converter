@@ -69,11 +69,13 @@ namespace HDL_Converter_Classes
         public string generateTestbenchTopLevel()
         {
             if (!inputProcessed) this.processInputHDL();
+            return this.module.generateTestbenchTopLevel();
         }
 
         public string generateTestbenchVerify()
         {
             if (!inputProcessed) this.processInputHDL();
+            return this.generateTestbenchVerify();
         }
 
         private void processInputHDL()
