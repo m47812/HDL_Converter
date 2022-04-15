@@ -12,10 +12,29 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public VeriModule() { }
 
+        /// <summary>
+        /// Initializes a Module from HDL code in string format.
+        /// </summary>
+        /// <param name="hdlModule"> hdl (header) code in string fromat</param>
+        /// <param name="settings">settings object that will be used for the output</param>
         public VeriModule(string hdlModule, Settings settings)
         {
             this.settings = settings;
             this.initializeFormHDLCode(hdlModule);
+        }
+
+        /// <summary>
+        /// Creates a copy of the module passed to it.
+        /// </summary>
+        /// <param name="otherModule"></param>
+        public VeriModule(VeriModule otherModule)
+        {
+            this.settings = otherModule.settings;
+            this.name = otherModule.name;
+            foreach (VeriWire otherWire in otherModule.wires)            
+                this.wires.Add(new VeriWire(otherWire));
+            foreach (VeriParameter otherParam in otherModule.parameters)
+                this.parameters.Add(new VeriParameter(otherParam));            
         }
 
         public override string generateModuleInstantiation()
@@ -55,7 +74,12 @@ namespace HDL_Converter_Classes.HDL_Structures
             return outputString;
         }
        
-
+        /// <summary>
+        /// Generates the top level file of a testbench. It contains the declaration of constants,
+        /// wires, a instance of the module passed by the user and a instance of the verify module used to verify
+        /// the Module
+        /// </summary>
+        /// <returns>The top level file content as a string</returns>
         public override string generateTestbenchTopLevel()
         {
             string hdlCode = Resources.VERILOG_TESTBENCH_TOP;
@@ -75,6 +99,12 @@ namespace HDL_Converter_Classes.HDL_Structures
             return hdlCode;
         }
 
+        /// <summary>
+        /// Generates the Verify module file content. It is a copy of the original moule passed by the user
+        /// but with inverted data diretion (input --> output, output --> input). The User can insert his
+        /// stimuli and assertion code in this file.
+        /// </summary>
+        /// <returns>The verify file as a string</returns>
         public override string generateTestbenchVerify()
         {
             throw new NotImplementedException();
@@ -193,6 +223,16 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VeriWire : Wire
     {
+        public VeriWire() { }
+
+        public VeriWire(VeriWire otherWire)
+        {
+            this.name = otherWire.name;
+            this.settings = otherWire.settings;
+            this.comment = otherWire.comment;
+            this.busSize = otherWire.busSize;
+            this.direction = otherWire.direction;
+        }
 
         /// <summary>
         /// Generates the module instantiation line for one wire
@@ -365,6 +405,19 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VeriParameter : Parameter
     {
+        public VeriParameter() { }
+
+        /// <summary>
+        /// Copy constructor creates a new object with same properties
+        /// </summary>
+        /// <param name="otherParameter">object to copy</param>
+        public VeriParameter(VeriParameter otherParameter)
+        {
+            this.name = otherParameter.name;
+            this.settings = otherParameter.settings;
+            this.value = otherParameter.value;
+            this.comment = otherParameter.comment;
+        }
 
         public override string generateInstantiationLine()
         {
