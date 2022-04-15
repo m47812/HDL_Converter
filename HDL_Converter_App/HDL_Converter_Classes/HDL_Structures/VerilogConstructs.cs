@@ -107,7 +107,17 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// <returns>The verify file as a string</returns>
         public override string generateTestbenchVerify()
         {
-            throw new NotImplementedException();
+            VeriModule verify = new VeriModule(this);
+            verify.invertAllWires();
+            verify.name = "verify_" + this.name;
+            string header = verify.generateModuleHeader();
+            string template = Resources.VERILOG_TEMPLATE_NO_HEADER;
+            template = template.Replace("$NAME$", verify.name);
+            template = template.Replace("$DATE$", System.DateTime.Now.ToString());
+            template = template.Replace("$SECTIONCOMMENT$", "Verification Code");
+            template = template.Replace("$INSTANCES$", "").Replace("$WIREDECLARATIONS$", "");
+            template = template.Replace("$HEADER$", header);
+            return template;
         }
 
         public override string generateParameterDeclaration()

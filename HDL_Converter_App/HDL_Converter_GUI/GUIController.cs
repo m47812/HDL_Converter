@@ -108,7 +108,8 @@ namespace HDL_Converter_GUI
         {
             if (setupHDLInput())
             {
-                string testbenchTop = converter.generateTestbenchTopLevel();
+                //string testbenchTop = converter.generateTestbenchTopLevel();
+                string testbenchTop = converter.generateTestbenchVerify();
                 System.Windows.Clipboard.SetText(testbenchTop);
             }
         }

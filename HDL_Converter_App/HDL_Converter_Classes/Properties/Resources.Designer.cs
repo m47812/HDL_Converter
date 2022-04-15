@@ -121,6 +121,36 @@ namespace HDL_Converter_Classes.Properties {
         ///// 
         ///////////////////////////////////////////////////////////////////////////////
         ///
+        ///$HEADER$
+        /////========================================================
+        ///// Wire Declarations
+        /////========================================================
+        ///
+        ///$WIREDECLARATIONS$
+        ///
+        /////========================================================
+        /////  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string VERILOG_TEMPLATE_NO_HEADER {
+            get {
+                return ResourceManager.GetString("VERILOG_TEMPLATE_NO_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ////////////////////////////////////////////////////////////////////////////
+        /////
+        ///// Name: $NAME$
+        ///// Description:
+        /////
+        ///// Version: 1.0.0
+        ///// Date: $DATE$
+        /////
+        ///// Company: 
+        ///// Engineer:
+        ///// 
+        ///////////////////////////////////////////////////////////////////////////////
+        ///
         ///module $NAME$();
         /////========================================================
         ///// Constants

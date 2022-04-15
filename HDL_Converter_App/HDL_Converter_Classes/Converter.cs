@@ -75,7 +75,7 @@ namespace HDL_Converter_Classes
         public string generateTestbenchVerify()
         {
             if (!inputProcessed) this.processInputHDL();
-            return this.generateTestbenchVerify();
+            return this.module.generateTestbenchVerify();
         }
 
         private void processInputHDL()
