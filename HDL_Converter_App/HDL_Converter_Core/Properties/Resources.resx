@@ -130,18 +130,18 @@ Available Modifiers:
 -d0 : Will not include direction comments ignoring default settings
 -d1 : Will include direction comments ignoring default settings ignoring default settings
 -c0 : Will not include the comments contained in the input header ignoring default settings
--c1	: Will include the comments contained in the input header ignoring default settings
+-c1 : Will include the comments contained in the input header ignoring default settings
 
 Example
 ===================================
 Input:
 module my_module
 #(
-	parameter paramOne = 1,
-	parameter paramTwo = 2
+    parameter paramOne = 1,
+    parameter paramTwo = 2
 )(
-	input wire myInput,
-	output wire [7:0] myOutBus
+    input wire myInput,
+    output wire [7:0] myOutBus
 );
 
 Creates:
@@ -163,7 +163,7 @@ Available Modifiers:
 -d0 : Will not include direction comments ignoring default settings
 -d1 : Will include direction comments ignoring default settings ignoring default settings
 -c0 : Will not include the comments contained in the input header ignoring default settings
--c1	: Will include the comments contained in the input header ignoring default settings
+-c1 : Will include the comments contained in the input header ignoring default settings
 
 
 Example
@@ -171,11 +171,11 @@ Example
 Input:
 module my_module
 #(
-	parameter paramOne = 1,
-	parameter paramTwo = 2
+    parameter paramOne = 1,
+    parameter paramTwo = 2
 )(
-	input wire myInput,
-	output wire [7:0] myOutBus
+    input wire myInput,
+    output wire [7:0] myOutBus
 );
 
 Creates:
@@ -196,27 +196,27 @@ It consists of a verify block that the user can modify with the simulations stim
 and a top level file that contains the instantiations for both the verify and the user
 given module.
 
-	Top Level
-	-----------------------------------------
-	|	Verify				User Module		|
-	|	-------------		-------------	|
-	|	|			|		|			|	|
-	|	|			|------&gt;|			|	|
-	|	|			|		|			|	|
-	|	|			|&lt;------|			|	|
-	|	|			|		|			|	|
-	|	-------------		-------------	|
-	|										|
-	-----------------------------------------
-	
+    Top Level
+    -----------------------------------------
+    |   Verify              User Module     |
+    |   -------------       -------------   |
+    |   |           |       |           |   |
+    |   |           |------&gt;|           |   |
+    |   |           |       |           |   |
+    |   |           |&lt;------|           |   |
+    |   |           |       |           |   |
+    |   -------------       -------------   |
+    |                                       |
+    -----------------------------------------
+
 Available Modifiers:
--t	: Will Output the top level file content
--v	: Will Output the verify file content
+-t  : Will Output the top level file content
+-v  : Will Output the verify file content
 -s0 : Will Create empty signal assignments ignoring default settings (e.g. .paramOne(paramOne) becomes .paramOne())
 -s1 : Will Create filled signal assignments with same name ignoring default settings (e.g. .paramOne(paramOne))
 -d0 : Will not include direction comments ignoring default settings
 -d1 : Will include direction comments ignoring default settings ignoring default settings
 -c0 : Will not include the comments contained in the input header ignoring default settings
--c1	: Will include the comments contained in the input header ignoring default settings</value>
+-c1 : Will include the comments contained in the input header ignoring default settings</value>
   </data>
 </root>

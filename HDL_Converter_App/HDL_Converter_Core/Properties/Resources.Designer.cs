@@ -73,7 +73,7 @@ namespace HDL_Converter_Core.Properties {
         ///-d0 : Will not include direction comments ignoring default settings
         ///-d1 : Will include direction comments ignoring default settings ignoring default settings
         ///-c0 : Will not include the comments contained in the input header ignoring default settings
-        ///-c1	: Will include the comments contained in the input header i [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///-c1 : Will include the comments contained in the input header i [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string HELP_DECLARATION {
             get {
@@ -108,16 +108,12 @@ namespace HDL_Converter_Core.Properties {
         ///and a top level file that contains the instantiations for both the verify and the user
         ///given module.
         ///
-        ///	Top Level
-        ///	-----------------------------------------
-        ///	|	Verify				User Module		|
-        ///	|	-------------		-------------	|
-        ///	|	|			|		|			|	|
-        ///	|	|			|------&gt;|			|	|
-        ///	|	|			|		|			|	|
-        ///	|	|			|&lt;------|			|	|
-        ///	|	|			|		|			|	|
-        ///	|	------------- [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///    Top Level
+        ///    -----------------------------------------
+        ///    |   Verify              User Module     |
+        ///    |   -------------       -------------   |
+        ///    |   |           |       |           |   |
+        ///    |   |           |------&gt;|          [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string HELP_TESTBENCH {
             get {

@@ -119,7 +119,7 @@ namespace HDL_Converter_Core
             Help = 5
         }
         public ISTRUCTION_TYPE type;
-        public List<Modifier> modifiers;
+        public List<Modifier> modifiers = new List<Modifier>();
         private bool instructionValid;
         private Settings backupSettings;
         private string helptext;

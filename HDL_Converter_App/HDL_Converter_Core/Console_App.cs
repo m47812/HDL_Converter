@@ -73,65 +73,24 @@ namespace HDL_Converter_Core
                 while (true)
                 {
                     Console.WriteLine("Enter d/i/t/e (declaration/instantiation/testbench/exit) to generate data or enter \"-m\" to open settings menu.");
-                    Console.WriteLine("Use help x (x it the instruction can be d/i/t) to find out more about a command");
-                    string[] userInput = Console.ReadLine().ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    switch (userInput[0])
+                    Console.WriteLine("Use help x (x is the instruction. It can be d/i/t) to find out more about a command and available modifiers");
+                    string userInput = Console.ReadLine();
+                    Instruction instruction = new Instruction(userInput);
+                    string result = instruction.execute(converter);
+                    switch (result)
                     {
-                        case "e":
+                        case "$ERROR$":
+                            printString("Invalid Instruction", ConsoleColor.Red);
+                            break;
+                        case "$EXIT$":
                             Console.Clear();
                             return;
-                        case "d":
-                            Console.WriteLine();
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            Console.WriteLine(converter.generateWireDeclaration());
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.WriteLine();
-                            break;
-                        case "i":
-                            Console.WriteLine();
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            Console.WriteLine(converter.generateModuleInstantiation());
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.WriteLine();
-                            break;
-                        case "-m":
+                        case "$MENU$":
                             openSettings();
                             printHDLCreateMenu();
                             break;
-                        case "t":
-                            if (userInput.Length > 1)
-                            {
-                                string reamaining = "";
-                                for (int i = 1; i < userInput.Length; i++)
-                                    reamaining += userInput[i] + " ";
-                                if (reamaining.Contains("-t"))
-                                {
-                                    Console.WriteLine();
-                                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                    Console.WriteLine(converter.generateTestbenchTopLevel());
-                                    Console.WriteLine();
-                                    Console.ForegroundColor = ConsoleColor.Gray;
-                                }
-                                if (reamaining.Contains("-v"))
-                                {
-                                    Console.WriteLine();
-                                    Console.ForegroundColor = ConsoleColor.Cyan;
-                                    Console.WriteLine(converter.generateTestbenchVerify());
-                                    Console.ForegroundColor = ConsoleColor.Gray;
-                                    Console.WriteLine();
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine();
-                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                Console.WriteLine(converter.generateTestbenchTopLevel());
-                                Console.WriteLine();
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                                Console.WriteLine(converter.generateTestbenchVerify());
-                                Console.ForegroundColor = ConsoleColor.Gray;
-                                Console.WriteLine();
-                            }  
+                        default:
+                            printString(result, ConsoleColor.DarkCyan);
                             break;
                     }
                 }
@@ -220,6 +179,15 @@ namespace HDL_Converter_Core
                 }
             }
             printSettings();
+        }
+
+        private void printString(string toPrint, ConsoleColor color)
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = color;
+            Console.WriteLine(toPrint);
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private void printSection(string title)
