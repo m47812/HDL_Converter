@@ -298,6 +298,11 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VeriWire : Wire
     {
+        /// <summary>
+        /// Marks if the wire has the signed property
+        /// </summary>
+        public bool signed = false;
+
         public VeriWire() { }
 
         public VeriWire(VeriWire otherWire)
@@ -307,6 +312,7 @@ namespace HDL_Converter_Classes.HDL_Structures
             this.comment = otherWire.comment;
             this.busSize = otherWire.busSize;
             this.direction = otherWire.direction;
+            this.signed = otherWire.signed;
         }
 
         /// <summary>
@@ -329,13 +335,14 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateWireDeclarationLine()
         {
+            string signedString = this.signed ? "signed " : "";
             if(this.busSize != "")
             {
-                return "wire " + this.busSize + " " + this.name + ";";
+                return "wire "+ signedString + this.busSize + " " + this.name + ";";
             }
             else
             {
-                 return "wire " + this.name + ";";
+                 return "wire "+ signedString + this.name + ";";
             }
         }
 
@@ -405,7 +412,8 @@ namespace HDL_Converter_Classes.HDL_Structures
                 {
                     this.name = codeLine.Substring(codeLine.Trim().IndexOf(' ')).Trim();
                 }
-            }            
+            }
+            this.signed = codeLine.Replace(this.name, "").ToLower().Contains("signed");
         }
 
         /// <summary>
@@ -491,6 +499,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                     retVal += "inout ";
                     break;
             }
+            if (this.signed) retVal += "signed ";
             if (this.busSize != "") retVal += this.busSize + " ";
             retVal += this.name;
             return retVal;

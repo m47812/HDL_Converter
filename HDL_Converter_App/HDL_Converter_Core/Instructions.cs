@@ -167,7 +167,14 @@ namespace HDL_Converter_Core
                         instructionValid = false;
                         break;
                 }
-                modifiers = Modifier.decodeModifiers(userInput);
+                try
+                {
+                    modifiers = Modifier.decodeModifiers(userInput);
+                }catch(IndexOutOfRangeException e)
+                {
+                    this.instructionValid = false;
+                }
+                
             }
         }
 
