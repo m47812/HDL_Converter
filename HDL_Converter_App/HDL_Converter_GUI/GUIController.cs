@@ -104,15 +104,30 @@ namespace HDL_Converter_GUI
             }
         }
 
-        public void generateTestbenchRequest(string path)
+        public void generateTestbenchRequest(int state, string path)
         {
             if (setupHDLInput())
-            {
-                //string testbenchTop = converter.generateTestbenchTopLevel();
-                string testbenchTop = converter.generateTestbenchVerify();
-                System.Windows.Clipboard.SetText(testbenchTop);
+            {               
+                switch (state)
+                {
+                    case 0://FILE
+                        converter.storeTestbenchToFile(path);
+                        informGUI(new GUIEvent("Testbench was stored to file", GUIEvent.Severity.Succsess), new EventArgs());
+                        break;
+                    case 1://Verify
+                        string testbenchVerify = converter.generateTestbenchVerify();
+                        System.Windows.Clipboard.SetText(testbenchVerify);
+                        informGUI(new GUIEvent("Testbench verify was copied to clipboard", GUIEvent.Severity.Succsess), new EventArgs());
+                        break;
+                    case 2://TOP
+                        string testbenchTop = converter.generateTestbenchTopLevel();
+                        System.Windows.Clipboard.SetText(testbenchTop);
+                        informGUI(new GUIEvent("Testbench top level was copied to clipboard", GUIEvent.Severity.Succsess), new EventArgs());
+                        break;
+                }  
             }
         }
+
 
         private bool setupHDLInput()
         {

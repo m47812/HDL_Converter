@@ -20,8 +20,15 @@ namespace HDL_Converter_GUI.GUI_Components
     /// </summary>
     public partial class TestbenchControl : UserControl
     {
+        private enum TestbenchRequestState
+        {
+            TOFILE = 0,
+            ClIP_VERIFY = 1,
+            CLIP_TOP = 2
+        }
+        private TestbenchRequestState state = TestbenchRequestState.TOFILE;
         private GUIController controller;
-        private string target_path;
+        private string target_path = "";
         public TestbenchControl()
         {
             InitializeComponent();
@@ -49,7 +56,45 @@ namespace HDL_Converter_GUI.GUI_Components
 
         private void click_generate_testbench(object sender, EventArgs e)
         {
-            this.controller.generateTestbenchRequest(this.target_path);
+            controller.generateTestbenchRequest((int)this.state, this.target_path);
+        }
+
+
+        private void rb_check_change(object sender, RoutedEventArgs e)
+        {
+            RadioButton button = sender as RadioButton;
+            switch (button.Name)
+            {
+                case "rbFile":
+                    buttonUpdate(true);
+                    this.state = TestbenchRequestState.TOFILE;
+                    break;
+                case "rbTopLevel":
+                    buttonUpdate(false);
+                    this.state = TestbenchRequestState.CLIP_TOP;
+                    break;
+                case "rbVerify":
+                    buttonUpdate(false);
+                    this.state = TestbenchRequestState.ClIP_VERIFY;
+                    break;
+                default:
+                    throw new InvalidOperationException("Check of unknown raio button occured");
+            }
+        }
+
+        private void buttonUpdate(bool switechedToFileState)
+        {
+            if (switechedToFileState)
+            {
+                btFolderDialog.IsEnabled = true;
+                if (target_path != "") btGenerateTestbench.IsEnabled = true;
+                else btGenerateTestbench.IsEnabled = false;
+            }
+            else
+            {
+                btFolderDialog.IsEnabled = false;
+                btGenerateTestbench.IsEnabled = true;
+            }
         }
     }
 }

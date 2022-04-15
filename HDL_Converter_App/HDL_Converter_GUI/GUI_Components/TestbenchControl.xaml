@@ -8,6 +8,7 @@
              d:DesignHeight="250" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="150"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -16,11 +17,25 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="laFolderLocation" Content="No Folder Selected" Grid.ColumnSpan="2" />
-        <Button x:Name="btFolderDialog" Grid.Row="1"  Content="Target Folder Location" Margin="5,5,5,5" Click="click_folder_location"
+        <Label x:Name="laFolderLocation" Content="No Folder Selected" Grid.ColumnSpan="3" />
+        <Button x:Name="btFolderDialog" Grid.Column="1" Grid.Row="1"  Content="Target Folder Location" Margin="5,5,5,5" Click="click_folder_location"
                 Background="#FFBACEDE" FontSize="16"/>
-        <Button x:Name="btGenerateTestbench" Content="Generate Testbench" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" Click="click_generate_testbench"
+        <Button x:Name="btGenerateTestbench" Content="Generate Testbench" Grid.Column="2" Grid.Row="1" Margin="5,5,5,5" Click="click_generate_testbench"
                 Background="#FFBACEDE" FontSize="16" IsEnabled="False"/>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <RadioButton x:Name="rbFile" Content="Both to File" Grid.Row="0" IsChecked="True"
+                         Checked="rb_check_change"/>
+            <RadioButton x:Name="rbTopLevel" Content="Top Level to Clipboard" Grid.Row="1"
+                         Checked="rb_check_change"/>
+            <RadioButton x:Name="rbVerify" Content="Verify to Clipboard" Grid.Row="2"
+                         Checked="rb_check_change"/>
+        </Grid>
 
     </Grid>
 </UserControl>

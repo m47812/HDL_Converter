@@ -96,5 +96,35 @@ namespace HDL_Converter_Test
         {
             throw new NotImplementedException();
         }
+
+        public override string generateParameterDeclaration()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateModuleHeader()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateHeaderPort()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateHeaderParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateTestbenchTopLevel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateTestbenchVerify()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

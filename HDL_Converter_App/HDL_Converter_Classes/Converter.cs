@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using HDL_Converter_Classes.HDL_Structures;
 
 namespace HDL_Converter_Classes
@@ -76,6 +77,20 @@ namespace HDL_Converter_Classes
         {
             if (!inputProcessed) this.processInputHDL();
             return this.module.generateTestbenchVerify();
+        }
+
+        public void storeTestbenchToFile(string path)
+        {
+            if (!inputProcessed) this.processInputHDL();
+            string topLevel = this.module.generateTestbenchTopLevel();
+            string verify = this.module.generateTestbenchVerify();
+            string fileEnding = this.settings.language == HDLLanguage.Verilog ? ".v" : ".vhd";
+            string toplevelPath = System.IO.Path.Combine(path, "tb_"+module.name+fileEnding);
+            string verifyPath = System.IO.Path.Combine(path, "verify_" + module.name + fileEnding);
+            toplevelPath = Path.GetFullPath(toplevelPath);
+            verifyPath = Path.GetFullPath(verifyPath);
+            File.WriteAllText(toplevelPath, topLevel);
+            File.WriteAllText(verifyPath, verify);
         }
 
         private void processInputHDL()

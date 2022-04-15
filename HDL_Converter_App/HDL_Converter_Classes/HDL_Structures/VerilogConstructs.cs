@@ -278,7 +278,7 @@ namespace HDL_Converter_Classes.HDL_Structures
         public override string generateHeaderParameters()
         {
             string port = "#(" + System.Environment.NewLine;
-            int elementCount = this.wires.Count;
+            int elementCount = this.parameters.Count;
             foreach (VeriParameter wire in this.parameters)
             {
                 elementCount--;
