@@ -121,7 +121,7 @@ verify_example
 endmodule
 ```
 
-The created Top Level:
+The created Verify:
 ```verilog
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -172,7 +172,9 @@ In the GUI version of the programm two options are supported:
 If the testbench shall be stored to files a target folder has to be provided using the "Target Folder Loacation" button.
 Only when a folder path is provided can the "Generate Testbench" button be clicked in this mode. If the "Target Folder Loacation" button is not clickable,
 select "Both to File" with the radio buttons on the left.  After clicking "Generate Testbench"
-the two generated files "verify_XY.v" and "tb_XY.v" (XY will be the inputed modules name) be found in the selected folder path.
+the two generated files "verify_XY.v" and "tb_XY.v" (XY will be the inputed modules name) be found in the selected folder path. If the generated file names are not available
+a incrementing number will be added to the file name. The module will not allow to write more than 5 modules of the same name in the same directory to avoid accidentally filling
+a folder with module testbenches when clicking "Generate Testbench" often.
 
 If the testbench shall be stored to the clipboard instead, use the radio buttons on the left to select if the verify or top level shall be generated.
 The after that click "Generate Testbench". The generated testbench file content can the be pasted into any file from the clipboard.

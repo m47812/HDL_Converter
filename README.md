@@ -80,20 +80,7 @@ wire someSignal;
 Testbench Creation:
 
 Generates modules of the structure bellow and connects them. See [Feature Guide](/Documentation/2_User_Guide/TESTBENCH_FEATURE.md) for more information.
-```
-    Top Level
-    -----------------------------------------
-    |   Verify              User Module     |
-    |   -------------       -------------   |
-    |   |           |       |           |   |
-    |   |           |------>|           |   |
-    |   |           |       |           |   |
-    |   |           |<------|           |   |
-    |   |           |       |           |   |
-    |   -------------       -------------   |
-    |                                       |
-    -----------------------------------------
-```
+
 
 
 ## User Interface
