@@ -153,4 +153,40 @@ $INSTANCES$
 endmodule</value>
     <comment>The template for creating a verilog module</comment>
   </data>
+  <data name="VERILOG_TESTBENCH_TOP" xml:space="preserve">
+    <value>////////////////////////////////////////////////////////////////////////////
+//
+// Name: $NAME$
+// Description:
+//
+// Version: 1.0.0
+// Date: $DATE$
+//
+// Company: 
+// Engineer:
+// 
+////////////////////////////////////////////////////////////////////////////
+
+module $NAME$();
+//========================================================
+// Constants
+//========================================================
+
+$CONSTANTS$
+
+//========================================================
+// Wire Declarations
+//========================================================
+
+$WIREDECLARATIONS$
+
+//========================================================
+// $SECTIONCOMMENT$
+//========================================================
+
+$INSTANCES$
+
+endmodule</value>
+    <comment>Template for creating the toplevel testbench module</comment>
+  </data>
 </root>

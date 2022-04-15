@@ -29,6 +29,7 @@ namespace HDL_Converter_Classes.HDL_Structures
         protected abstract void initializeParameters(string hdlCode);
         protected abstract void initializeWires(string hdlCode);
         public abstract string generateWireDeclaration();
+        public abstract string generateParameterDeclaration();
         public abstract string generateModuleInstantiation();
         public abstract string generateTestbenchTopLevel();
         public abstract string generateTestbenchVerify();

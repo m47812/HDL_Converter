@@ -94,5 +94,35 @@ namespace HDL_Converter_Classes.Properties {
                 return ResourceManager.GetString("VERILOG_MODULE_SYNTAX", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ////////////////////////////////////////////////////////////////////////////
+        /////
+        ///// Name: $NAME$
+        ///// Description:
+        /////
+        ///// Version: 1.0.0
+        ///// Date: $DATE$
+        /////
+        ///// Company: 
+        ///// Engineer:
+        ///// 
+        ///////////////////////////////////////////////////////////////////////////////
+        ///
+        ///module $NAME$();
+        /////========================================================
+        ///// Constants
+        /////========================================================
+        ///
+        ///$CONSTANTS$
+        ///
+        /////========================================================
+        ///// Wire De [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string VERILOG_TESTBENCH_TOP {
+            get {
+                return ResourceManager.GetString("VERILOG_TESTBENCH_TOP", resourceCulture);
+            }
+        }
     }
 }

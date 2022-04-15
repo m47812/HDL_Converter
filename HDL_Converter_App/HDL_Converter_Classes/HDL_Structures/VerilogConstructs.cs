@@ -54,15 +54,15 @@ namespace HDL_Converter_Classes.HDL_Structures
             outputString += ';';
             return outputString;
         }
+       
 
         public override string generateTestbenchTopLevel()
         {
-            string hdlCode = Resources.VERILOG_MODULE_SYNTAX;
-            hdlCode = hdlCode.Replace("$NAME$", this.name);
+            string hdlCode = Resources.VERILOG_TESTBENCH_TOP;
+            hdlCode = hdlCode.Replace("$NAME$", "tb_"+this.name);
             hdlCode = hdlCode.Replace("$WIREDECLARATIONS$", this.generateWireDeclaration());
+            hdlCode = hdlCode.Replace("$CONSTANTS$", this.generateParameterDeclaration());
             hdlCode = hdlCode.Replace("$SECTIONCOMMENT$", "Module Instantiations");
-            hdlCode = hdlCode.Replace("$PORT$", "");
-            hdlCode = hdlCode.Replace("$PARAMETERS$", "");
             hdlCode = hdlCode.Replace("$DATE$", System.DateTime.Now.ToString());
 
             bool emtyIO = this.settings.emptyIOs;
@@ -78,6 +78,19 @@ namespace HDL_Converter_Classes.HDL_Structures
         public override string generateTestbenchVerify()
         {
             throw new NotImplementedException();
+        }
+
+        public override string generateParameterDeclaration()
+        {
+            string outputString = "";
+            int lastItemCheck = this.parameters.Count;
+            foreach (VeriParameter param in this.parameters)
+            {
+                lastItemCheck--;
+                outputString += param.generateWireDeclarationLine() + param.buildComment();
+                if (lastItemCheck != 0) outputString += System.Environment.NewLine;
+            }
+            return outputString;
         }
 
         public override string generateWireDeclaration()
