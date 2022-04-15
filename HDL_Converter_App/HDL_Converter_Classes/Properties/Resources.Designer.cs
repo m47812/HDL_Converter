@@ -61,6 +61,18 @@ namespace HDL_Converter_Classes.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die module $NAME$
+        ///$PARAMETERS$(
+        ///$PORT$
+        ///); ähnelt.
+        /// </summary>
+        internal static string VERILOG_MODULE_HEADER {
+            get {
+                return ResourceManager.GetString("VERILOG_MODULE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ////////////////////////////////////////////////////////////////////////////
         /////
         ///// Name: $NAME$

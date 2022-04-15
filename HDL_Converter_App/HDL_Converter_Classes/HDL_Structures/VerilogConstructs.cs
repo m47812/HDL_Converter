@@ -215,7 +215,72 @@ namespace HDL_Converter_Classes.HDL_Structures
                 }
             }
         }
-    
+
+        /// <summary>
+        /// Generates a Modules Header
+        /// </summary>
+        /// <example>
+        /// module myModule
+        /// #(
+        /// parameter someParameter = 1
+        /// )
+        /// (
+        /// input someWire;
+        /// );
+        /// </example>
+        /// <returns>A Module Header (see Example)</returns>
+        public override string generateModuleHeader()
+        {
+            string header = Resources.VERILOG_MODULE_HEADER;
+            header = header.Replace("$NAME$", this.name);
+            header = header.Replace("$PORT$", this.generateHeaderPort());
+            if (this.parameters.Count > 0)
+                header = header.Replace("$PARAMETERS$", this.generateHeaderParameters());
+            else
+                header = header.Replace("$PARAMETERS$", "");
+            return header;
+        }
+
+        /// <summary>
+        /// Generates the wires in a module Header
+        /// </summary>
+        /// <returns>All wires in the module as a string</returns>
+        public override string generateHeaderPort()
+        {
+            string port = "";
+            int elementCount = this.wires.Count;
+            foreach(VeriWire wire in this.wires)
+            {
+                elementCount--;
+                port += wire.generateHeaderLine();
+                if (elementCount > 0)
+                    port += ", " + wire.buildComment() + System.Environment.NewLine;
+                else
+                    port += " " + wire.buildComment();
+            }
+            return port;
+        }
+
+        /// <summary>
+        /// Generates all parameters in a module header
+        /// </summary>
+        /// <returns>String of parameters containd within "#(" and ")"</returns>
+        public override string generateHeaderParameters()
+        {
+            string port = "#(" + System.Environment.NewLine;
+            int elementCount = this.wires.Count;
+            foreach (VeriParameter wire in this.parameters)
+            {
+                elementCount--;
+                port += wire.generateHeaderLine();
+                if (elementCount > 0)
+                    port += ", " + wire.buildComment() + System.Environment.NewLine;
+                else
+                    port += " " + wire.buildComment();
+            }
+            port += System.Environment.NewLine + ")";
+            return port;
+        }
     }
 
     /// <summary>
@@ -398,6 +463,28 @@ namespace HDL_Converter_Classes.HDL_Structures
             }
             return outComment;
         }
+
+        public override string generateHeaderLine()
+        {
+            string retVal = "";
+            switch (this.direction)
+            {
+                case PortDirection.UNKNOWN:
+                    break;
+                case PortDirection.Input:
+                    retVal += "input ";
+                    break;
+                case PortDirection.Output:
+                    retVal += "output ";
+                    break;
+                case PortDirection.InOut:
+                    retVal += "inout ";
+                    break;
+            }
+            if (this.busSize != "") retVal += this.busSize + " ";
+            retVal += this.name;
+            return retVal;
+        }
     }
 
     /// <summary>
@@ -453,6 +540,13 @@ namespace HDL_Converter_Classes.HDL_Structures
         {
             if (settings.includeInputComments && this.comment != "") return (" //" + this.comment);
             else return "";
+        }
+
+        public override string generateHeaderLine()
+        {
+            string retVal = "parameter " + this.name;
+            if (this.value != "") retVal += " = " + this.value;
+            return retVal;
         }
     }
 
