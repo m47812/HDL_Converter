@@ -84,11 +84,20 @@ namespace HDL_Converter_Classes
             if (!inputProcessed) this.processInputHDL();
             string topLevel = this.module.generateTestbenchTopLevel();
             string verify = this.module.generateTestbenchVerify();
+            string toplevelPath;
+            string verifyPath;
+            int existsCount = 0;
             string fileEnding = this.settings.language == HDLLanguage.Verilog ? ".v" : ".vhd";
-            string toplevelPath = System.IO.Path.Combine(path, "tb_"+module.name+fileEnding);
-            string verifyPath = System.IO.Path.Combine(path, "verify_" + module.name + fileEnding);
-            toplevelPath = Path.GetFullPath(toplevelPath);
-            verifyPath = Path.GetFullPath(verifyPath);
+            do
+            {
+                if (existsCount > 5) throw new FileLoadException("In the requested file path more than 5 instances of the module exist remove one to create a new one");
+                string counter = existsCount > 0 ? existsCount.ToString() : "";
+                toplevelPath = System.IO.Path.Combine(path, "tb_" + module.name + counter + fileEnding);
+                verifyPath = System.IO.Path.Combine(path, "verify_" + module.name + counter + fileEnding);
+                toplevelPath = Path.GetFullPath(toplevelPath);
+                verifyPath = Path.GetFullPath(verifyPath);
+                existsCount++;
+            } while (File.Exists(toplevelPath) || File.Exists(verifyPath));
             File.WriteAllText(toplevelPath, topLevel);
             File.WriteAllText(verifyPath, verify);
         }
