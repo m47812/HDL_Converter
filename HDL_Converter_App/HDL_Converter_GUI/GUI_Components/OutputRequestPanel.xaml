@@ -7,21 +7,30 @@
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch">
-    <GroupBox Header="Output Selection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20">
+    <GroupBox Header="Output Selection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48*"/>
-                <ColumnDefinition Width="230*"/>
-                <ColumnDefinition Width="277*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*" MaxHeight="30"/>
             </Grid.RowDefinitions>
-            <Button x:Name="btGenerateInstantiation" Margin="5,5" Background="#FFBACEDE" FontSize="16" Grid.ColumnSpan="2" Content="Generate Instantiation" Click="btGenerateInstantiation_Click" />
-            <Button x:Name="btGenerateWireDeclaration" Grid.Column="2" Margin="5,5" Background="#FFBACEDE" FontSize="16" Content="Generate Wire Declaration" Click="btGenerateWireDeclaration_Click" />
-            <Label x:Name="laOutputText" Grid.ColumnSpan="3" Grid.Row="1" FontSize="16"/>
-
+            <TabControl FontSize="10" Grid.Row="0">
+                <TabItem Header="Default Output">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button x:Name="btGenerateInstantiation" Margin="5,5" Background="#FFBACEDE" FontSize="16" Content="Generate Instantiation" Click="btGenerateInstantiation_Click" />
+                        <Button x:Name="btGenerateWireDeclaration" Grid.Column="1" Margin="5,5" Background="#FFBACEDE" FontSize="16" Content="Generate Wire Declaration" Click="btGenerateWireDeclaration_Click" />
+                        
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Testbench">
+                    <local:TestbenchControl x:Name="ucTestbenchPanel"/>
+                </TabItem>
+            </TabControl>
+            <Label x:Name="laOutputText" Grid.ColumnSpan="1" Grid.Row="1" FontSize="16"/>
         </Grid>
     </GroupBox>
 </UserControl>

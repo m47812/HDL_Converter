@@ -29,7 +29,13 @@ namespace HDL_Converter_Classes.HDL_Structures
         protected abstract void initializeParameters(string hdlCode);
         protected abstract void initializeWires(string hdlCode);
         public abstract string generateWireDeclaration();
+        public abstract string generateParameterDeclaration();
         public abstract string generateModuleInstantiation();
+        public abstract string generateModuleHeader();
+        public abstract string generateHeaderPort();
+        public abstract string generateHeaderParameters();
+        public abstract string generateTestbenchTopLevel();
+        public abstract string generateTestbenchVerify();
 
         /// <summary>
         /// Calculates the open and close index of the top parentheses. 
@@ -73,6 +79,19 @@ namespace HDL_Converter_Classes.HDL_Structures
             }
             if (cnt_opened != 0) throw new FormatException("Uneven Parenteses");
             return new Tuple<int, int>(startIndex, endIndex);
+        }
+
+        /// <summary>
+        /// Inverts the all wire's direction
+        /// Input --> Output
+        /// Output --> Input
+        /// InOut --> InOut
+        /// UNKNOWN --> Throws InvalidOperationException
+        /// </summary>
+        public void invertAllWires()
+        {
+            foreach (Wire wire in this.wires)
+               wire.invertDirection();
         }
     }
 
@@ -122,6 +141,14 @@ namespace HDL_Converter_Classes.HDL_Structures
         public abstract string generateWireDeclarationLine();
 
         /// <summary>
+        /// Generates a header line used in a modules definition.
+        /// It is the same as the format that is inputed by the user but
+        /// built from the components attributes.
+        /// </summary>
+        /// <returns>A module header line e.g. input [7:0] mywire</returns>
+        public abstract string generateHeaderLine();
+
+        /// <summary>
         /// Generates the comment to add at the end of the line dependant on the setting
         /// configured in the settings attribute.
         /// </summary>
@@ -154,5 +181,28 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// <example>"[7:0]" for Verilog or "(7 downto 0)" for VHDL</example>
         public string busSize = "";
 
+        /// <summary>
+        /// Inverts the port direction
+        /// Input --> Output
+        /// Output --> Input
+        /// InOut --> InOut
+        /// UNKNOWN --> Throws InvalidOperationException
+        /// </summary>
+        public void invertDirection()
+        {
+            switch (this.direction)
+            {
+                case PortDirection.UNKNOWN:
+                    throw new InvalidOperationException("Port direction type \"UNKNOWN\" can not be converted.");
+                case PortDirection.Input:
+                    this.direction = PortDirection.Output;
+                    break;
+                case PortDirection.Output:
+                    this.direction = PortDirection.Input;
+                    break;
+                case PortDirection.InOut:
+                    break;
+            }
+        }
     }
 }
