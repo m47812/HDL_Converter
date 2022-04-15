@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -111,8 +112,14 @@ namespace HDL_Converter_GUI
                 switch (state)
                 {
                     case 0://FILE
-                        converter.storeTestbenchToFile(path);
-                        informGUI(new GUIEvent("Testbench was stored to file", GUIEvent.Severity.Succsess), new EventArgs());
+                        try
+                        {
+                            converter.storeTestbenchToFile(path);
+                            informGUI(new GUIEvent("Testbench was stored to file", GUIEvent.Severity.Succsess), new EventArgs());
+                        }catch(FileLoadException e)
+                        {
+                            informGUI(new GUIEvent(e.Message, GUIEvent.Severity.Error), new EventArgs());
+                        }
                         break;
                     case 1://Verify
                         string testbenchVerify = converter.generateTestbenchVerify();
