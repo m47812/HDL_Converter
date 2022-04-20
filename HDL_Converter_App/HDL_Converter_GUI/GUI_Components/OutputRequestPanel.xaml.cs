@@ -30,6 +30,7 @@ namespace HDL_Converter_GUI.GUI_Components
         public void registerGUIController(GUIController controller)
         {
             this.controller = controller;
+            this.ucTestbenchPanel.registerGUIController(controller);
             controller.informGUI += update_console;
         }
 

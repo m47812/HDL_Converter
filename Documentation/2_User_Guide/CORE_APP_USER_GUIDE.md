@@ -20,10 +20,11 @@ Here you have the Options:
  
  ### HDL Output Selection
  1) Once you have entered a Verilog module you will see the part of the image bellow marked with "1".
- 2) Here again you have three options:
+ 2) Here again you have the following options:
  - `d` --> Will output code declaring all Wires in your module (excluding parameters)
  - `i` --> Will output the instantiation code for the module header you have entered before
  - `e` --> Will take you back to the main menu. Do this if you want to change the HDL Input.
+ - `t` --> Will generate a testbench structure more information can be found in the [Testbench Feature Guide](/Documentation/2_User_Guide/TESTBENCH_FEATURE.md).
  - `-m` --> Will take you to the settings menu where you can make changes to the format you will recive as an output.
  3) The Section marked with "3" will be the output of the comand you have entered. You can now repeat step "2" or
  can exit the menu with `e`.

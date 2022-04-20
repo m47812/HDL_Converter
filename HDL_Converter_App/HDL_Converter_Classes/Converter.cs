@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using HDL_Converter_Classes.HDL_Structures;
 
 namespace HDL_Converter_Classes
@@ -64,6 +65,41 @@ namespace HDL_Converter_Classes
         {
             if (!inputProcessed) this.processInputHDL();
             return module.generateModuleInstantiation();
+        }
+
+        public string generateTestbenchTopLevel()
+        {
+            if (!inputProcessed) this.processInputHDL();
+            return this.module.generateTestbenchTopLevel();
+        }
+
+        public string generateTestbenchVerify()
+        {
+            if (!inputProcessed) this.processInputHDL();
+            return this.module.generateTestbenchVerify();
+        }
+
+        public void storeTestbenchToFile(string path)
+        {
+            if (!inputProcessed) this.processInputHDL();
+            string topLevel = this.module.generateTestbenchTopLevel();
+            string verify = this.module.generateTestbenchVerify();
+            string toplevelPath;
+            string verifyPath;
+            int existsCount = 0;
+            string fileEnding = this.settings.language == HDLLanguage.Verilog ? ".v" : ".vhd";
+            do
+            {
+                if (existsCount > 5) throw new FileLoadException("In the requested file path more than 5 instances of the module exist remove one to create a new one");
+                string counter = existsCount > 0 ? existsCount.ToString() : "";
+                toplevelPath = System.IO.Path.Combine(path, "tb_" + module.name + counter + fileEnding);
+                verifyPath = System.IO.Path.Combine(path, "verify_" + module.name + counter + fileEnding);
+                toplevelPath = Path.GetFullPath(toplevelPath);
+                verifyPath = Path.GetFullPath(verifyPath);
+                existsCount++;
+            } while (File.Exists(toplevelPath) || File.Exists(verifyPath));
+            File.WriteAllText(toplevelPath, topLevel);
+            File.WriteAllText(verifyPath, verify);
         }
 
         private void processInputHDL()

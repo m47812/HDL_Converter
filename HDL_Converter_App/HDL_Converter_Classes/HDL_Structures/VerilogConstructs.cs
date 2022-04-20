@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using HDL_Converter_Classes.Properties;
 
 namespace HDL_Converter_Classes.HDL_Structures
 {
@@ -11,10 +12,29 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public VeriModule() { }
 
+        /// <summary>
+        /// Initializes a Module from HDL code in string format.
+        /// </summary>
+        /// <param name="hdlModule"> hdl (header) code in string fromat</param>
+        /// <param name="settings">settings object that will be used for the output</param>
         public VeriModule(string hdlModule, Settings settings)
         {
             this.settings = settings;
             this.initializeFormHDLCode(hdlModule);
+        }
+
+        /// <summary>
+        /// Creates a copy of the module passed to it.
+        /// </summary>
+        /// <param name="otherModule"></param>
+        public VeriModule(VeriModule otherModule)
+        {
+            this.settings = otherModule.settings;
+            this.name = otherModule.name;
+            foreach (VeriWire otherWire in otherModule.wires)            
+                this.wires.Add(new VeriWire(otherWire));
+            foreach (VeriParameter otherParam in otherModule.parameters)
+                this.parameters.Add(new VeriParameter(otherParam));            
         }
 
         public override string generateModuleInstantiation()
@@ -51,6 +71,65 @@ namespace HDL_Converter_Classes.HDL_Structures
                 }
             }
             outputString += ';';
+            return outputString;
+        }
+       
+        /// <summary>
+        /// Generates the top level file of a testbench. It contains the declaration of constants,
+        /// wires, a instance of the module passed by the user and a instance of the verify module used to verify
+        /// the Module
+        /// </summary>
+        /// <returns>The top level file content as a string</returns>
+        public override string generateTestbenchTopLevel()
+        {
+            string hdlCode = Resources.VERILOG_TESTBENCH_TOP;
+            hdlCode = hdlCode.Replace("$NAME$", "tb_"+this.name);
+            hdlCode = hdlCode.Replace("$WIREDECLARATIONS$", this.generateWireDeclaration());
+            hdlCode = hdlCode.Replace("$CONSTANTS$", this.generateParameterDeclaration());
+            hdlCode = hdlCode.Replace("$SECTIONCOMMENT$", "Module Instantiations");
+            hdlCode = hdlCode.Replace("$DATE$", System.DateTime.Now.ToString());
+
+            bool emtyIO = this.settings.emptyIOs;
+            this.settings.emptyIOs = false;
+            string instance = this.generateModuleInstantiation();
+            this.settings.emptyIOs = emtyIO;
+            string instanciation = instance.Replace("inst_" + this.name, "DUT") + System.Environment.NewLine
+                + System.Environment.NewLine + instance.Replace("inst_" + this.name, "Verify").Replace(this.name,"verify_"+this.name);
+            hdlCode = hdlCode.Replace("$INSTANCES$", instanciation);
+            return hdlCode;
+        }
+
+        /// <summary>
+        /// Generates the Verify module file content. It is a copy of the original moule passed by the user
+        /// but with inverted data diretion (input --> output, output --> input). The User can insert his
+        /// stimuli and assertion code in this file.
+        /// </summary>
+        /// <returns>The verify file as a string</returns>
+        public override string generateTestbenchVerify()
+        {
+            VeriModule verify = new VeriModule(this);
+            verify.invertAllWires();
+            verify.name = "verify_" + this.name;
+            string header = verify.generateModuleHeader();
+            string template = Resources.VERILOG_TEMPLATE_NO_HEADER;
+            template = template.Replace("$NAME$", verify.name);
+            template = template.Replace("$DATE$", System.DateTime.Now.ToString());
+            template = template.Replace("$SECTIONCOMMENT$", "Verification Code");
+            template = template.Replace("$INSTANCES$", "").Replace("$WIREDECLARATIONS$", "");
+            template = template.Replace("$HEADER$", header);
+            return template;
+        }
+
+        public override string generateParameterDeclaration()
+        {
+            string outputString = "";
+            int lastItemCheck = this.parameters.Count;
+            foreach (VeriParameter param in this.parameters)
+            {
+                lastItemCheck--;
+                outputString += param.generateWireDeclarationLine() + param.buildComment();
+                if (lastItemCheck != 0) outputString += System.Environment.NewLine;
+            }
             return outputString;
         }
 
@@ -146,7 +225,72 @@ namespace HDL_Converter_Classes.HDL_Structures
                 }
             }
         }
-    
+
+        /// <summary>
+        /// Generates a Modules Header
+        /// </summary>
+        /// <example>
+        /// module myModule
+        /// #(
+        /// parameter someParameter = 1
+        /// )
+        /// (
+        /// input someWire;
+        /// );
+        /// </example>
+        /// <returns>A Module Header (see Example)</returns>
+        public override string generateModuleHeader()
+        {
+            string header = Resources.VERILOG_MODULE_HEADER;
+            header = header.Replace("$NAME$", this.name);
+            header = header.Replace("$PORT$", this.generateHeaderPort());
+            if (this.parameters.Count > 0)
+                header = header.Replace("$PARAMETERS$", this.generateHeaderParameters());
+            else
+                header = header.Replace("$PARAMETERS$", "");
+            return header;
+        }
+
+        /// <summary>
+        /// Generates the wires in a module Header
+        /// </summary>
+        /// <returns>All wires in the module as a string</returns>
+        public override string generateHeaderPort()
+        {
+            string port = "";
+            int elementCount = this.wires.Count;
+            foreach(VeriWire wire in this.wires)
+            {
+                elementCount--;
+                port += wire.generateHeaderLine();
+                if (elementCount > 0)
+                    port += ", " + wire.buildComment() + System.Environment.NewLine;
+                else
+                    port += " " + wire.buildComment();
+            }
+            return port;
+        }
+
+        /// <summary>
+        /// Generates all parameters in a module header
+        /// </summary>
+        /// <returns>String of parameters containd within "#(" and ")"</returns>
+        public override string generateHeaderParameters()
+        {
+            string port = "#(" + System.Environment.NewLine;
+            int elementCount = this.parameters.Count;
+            foreach (VeriParameter wire in this.parameters)
+            {
+                elementCount--;
+                port += wire.generateHeaderLine();
+                if (elementCount > 0)
+                    port += ", " + wire.buildComment() + System.Environment.NewLine;
+                else
+                    port += " " + wire.buildComment();
+            }
+            port += System.Environment.NewLine + ")";
+            return port;
+        }
     }
 
     /// <summary>
@@ -154,6 +298,22 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VeriWire : Wire
     {
+        /// <summary>
+        /// Marks if the wire has the signed property
+        /// </summary>
+        public bool signed = false;
+
+        public VeriWire() { }
+
+        public VeriWire(VeriWire otherWire)
+        {
+            this.name = otherWire.name;
+            this.settings = otherWire.settings;
+            this.comment = otherWire.comment;
+            this.busSize = otherWire.busSize;
+            this.direction = otherWire.direction;
+            this.signed = otherWire.signed;
+        }
 
         /// <summary>
         /// Generates the module instantiation line for one wire
@@ -175,13 +335,14 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateWireDeclarationLine()
         {
+            string signedString = this.signed ? "signed " : "";
             if(this.busSize != "")
             {
-                return "wire " + this.busSize + " " + this.name + ";";
+                return "wire "+ signedString + this.busSize + " " + this.name + ";";
             }
             else
             {
-                 return "wire " + this.name + ";";
+                 return "wire "+ signedString + this.name + ";";
             }
         }
 
@@ -251,7 +412,8 @@ namespace HDL_Converter_Classes.HDL_Structures
                 {
                     this.name = codeLine.Substring(codeLine.Trim().IndexOf(' ')).Trim();
                 }
-            }            
+            }
+            this.signed = codeLine.Replace(this.name, "").ToLower().Contains("signed");
         }
 
         /// <summary>
@@ -319,6 +481,29 @@ namespace HDL_Converter_Classes.HDL_Structures
             }
             return outComment;
         }
+
+        public override string generateHeaderLine()
+        {
+            string retVal = "";
+            switch (this.direction)
+            {
+                case PortDirection.UNKNOWN:
+                    break;
+                case PortDirection.Input:
+                    retVal += "input ";
+                    break;
+                case PortDirection.Output:
+                    retVal += "output ";
+                    break;
+                case PortDirection.InOut:
+                    retVal += "inout ";
+                    break;
+            }
+            if (this.signed) retVal += "signed ";
+            if (this.busSize != "") retVal += this.busSize + " ";
+            retVal += this.name;
+            return retVal;
+        }
     }
 
     /// <summary>
@@ -326,6 +511,19 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VeriParameter : Parameter
     {
+        public VeriParameter() { }
+
+        /// <summary>
+        /// Copy constructor creates a new object with same properties
+        /// </summary>
+        /// <param name="otherParameter">object to copy</param>
+        public VeriParameter(VeriParameter otherParameter)
+        {
+            this.name = otherParameter.name;
+            this.settings = otherParameter.settings;
+            this.value = otherParameter.value;
+            this.comment = otherParameter.comment;
+        }
 
         public override string generateInstantiationLine()
         {
@@ -361,6 +559,13 @@ namespace HDL_Converter_Classes.HDL_Structures
         {
             if (settings.includeInputComments && this.comment != "") return (" //" + this.comment);
             else return "";
+        }
+
+        public override string generateHeaderLine()
+        {
+            string retVal = "parameter " + this.name;
+            if (this.value != "") retVal += " = " + this.value;
+            return retVal;
         }
     }
 
