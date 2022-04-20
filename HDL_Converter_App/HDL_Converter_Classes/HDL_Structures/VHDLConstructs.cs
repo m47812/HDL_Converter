@@ -133,17 +133,35 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateHeaderLine()
         {
-            throw new NotImplementedException();
+            string retString = this.name + " \t: ";
+            switch (this.direction)
+            {
+                case PortDirection.UNKNOWN:
+                    break;
+                case PortDirection.Input:
+                    retString += "in ";
+                    break;
+                case PortDirection.Output:
+                    retString += "out ";
+                    break;
+                case PortDirection.InOut:
+                    retString += "inout ";
+                    break;
+            }
+            retString += this.busSize;
+            return retString;
         }
 
         public override string generateInstantiationLine()
         {
-            throw new NotImplementedException();
+            string retString = this.name + " \t=> \t";
+            if (!this.settings.emptyIOs) retString += this.name;
+            return retString;
         }
 
         public override string generateWireDeclarationLine()
         {
-            throw new NotImplementedException();
+            return "signal " + this.name + " : " + this.busSize + ";";
         }
 
         public override void initializeFromCodeLine(string codeLine)
@@ -186,17 +204,19 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateHeaderLine()
         {
-            throw new NotImplementedException();
+            return this.name + " \t: " + this.dataType + " := " + this.value;
         }
 
         public override string generateInstantiationLine()
         {
-            throw new NotImplementedException();
+            string retString = this.name + " \t=> \t";
+            if (!this.settings.emptyIOs) retString += this.name;
+            return retString;
         }
 
         public override string generateWireDeclarationLine()
         {
-            throw new NotImplementedException();
+            return "constant " + this.name + " : " + this.dataType + " := " + this.value + ";";
         }
 
         public override void initializeFromCodeLine(string codeLine)
