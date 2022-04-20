@@ -26,7 +26,37 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     class VHDLModule : HDLModule
     {
+        public override string generateHeaderParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateHeaderPort()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateModuleHeader()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string generateModuleInstantiation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateParameterDeclaration()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateTestbenchTopLevel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string generateTestbenchVerify()
         {
             throw new NotImplementedException();
         }
@@ -101,6 +131,11 @@ namespace HDL_Converter_Classes.HDL_Structures
             return outComment;
         }
 
+        public override string generateHeaderLine()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string generateInstantiationLine()
         {
             throw new NotImplementedException();
@@ -149,6 +184,11 @@ namespace HDL_Converter_Classes.HDL_Structures
             else return "";
         }
 
+        public override string generateHeaderLine()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string generateInstantiationLine()
         {
             throw new NotImplementedException();
@@ -192,18 +232,17 @@ namespace HDL_Converter_Classes.HDL_Structures
         public static List<string[]> separateElements(string hdlCode)
         {
             List<string[]> retList = new List<string[]>();
-            string[] lineSeparatedHDL = hdlCode.Split(new string[] { System.Environment.NewLine}, StringSplitOptions.None);
+            string[] lineSeparatedHDL = hdlCode.Split(new string[] { System.Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
             foreach (string lineSepar in lineSeparatedHDL)
             {
-                string line = lineSepar;
-                if (line[line.Length - 1] == ';') line = line.Remove(line.Length - 1);
+                string line = lineSepar.Trim();
                 if(line != "")
                 {
                     string[] nextElement = new string[2];
                     if (line.Contains("--"))
                     {
                         string[] data = line.Split(new string[] {"--"}, StringSplitOptions.None);
-                        nextElement[0] = data[0].Trim();
+                        nextElement[0] = data[0].Replace(';', ' ').Trim();
                         nextElement[1] = "";
                         for(int i = 1; i < data.Length; i++)
                         {
@@ -213,7 +252,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                     }
                     else
                     {
-                        nextElement[0] = line.Trim();
+                        nextElement[0] = line.Replace(';', ' ').Trim();
                         nextElement[1] = "";
                     }
                     retList.Add(nextElement);

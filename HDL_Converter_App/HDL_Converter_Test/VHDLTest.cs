@@ -32,5 +32,22 @@ namespace HDL_Converter_Test
             Assert.IsTrue(dataType == generic.dataType);
             Assert.IsTrue(value == generic.value);
         }
+
+        [TestMethod]
+        public void test_separate_elements()
+        {
+            string path = "@../../../../../Test_data/VDHL_Example_Signals.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            for (int i = 0; i < fileContent.Length; i += 2)
+            {
+                List<string[]> computed = VHDLDataProcessing.separateElements(fileContent[i]);
+                string[] expected = fileContent[i + 1].Split('|');
+                for (int j = 0; j < expected.Length; j++)
+                {
+                    string res = computed[j / 2][j % 2];
+                    Assert.IsTrue(res.Equals(expected[j]));
+                }
+            }
+        }
     }
 }

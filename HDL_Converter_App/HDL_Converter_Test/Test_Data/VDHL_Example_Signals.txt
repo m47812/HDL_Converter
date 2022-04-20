@@ -1,0 +1,5 @@
+﻿clk : in std_ulogic; --Comment 1
+write_data : in std_ulogic_vector(7 downto 0);
+write_enable : in std_ulogic;
+write_row_pointer : in unsigned(1 downto 0); --Comment 2
+$clk : in std_ulogic|Comment 1|write_data : in std_ulogic_vector(7 downto 0)||write_enable : in std_ulogic||write_row_pointer : in unsigned(1 downto 0)|Comment 2
