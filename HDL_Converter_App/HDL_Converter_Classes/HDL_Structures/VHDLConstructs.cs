@@ -24,8 +24,18 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// <summary>
     /// A Module in VHDL (Entity) containing IO signals and generics
     /// </summary>
-    class VHDLModule : HDLModule
+    public class VHDLModule : HDLModule
     {
+        public VHDLModule() { }
+        /// <summary>
+        /// Initializes a Module from HDL code in string format.
+        /// </summary>
+        /// <param name="hdlModule"> hdl (header) code in string fromat</param>
+        /// <param name="settings">settings object that will be used for the output</param>
+        public VHDLModule(string hdlModule, Settings settings) : base(hdlModule, settings)
+        {
+        }
+
         public override string generateHeaderParameters()
         {
             throw new NotImplementedException();
@@ -81,25 +91,49 @@ namespace HDL_Converter_Classes.HDL_Structures
             if(startIndex != -1)
             {
                 Tuple<int, int> genericBoundries = this.getTopParenteses('(', ')', entity_L.Substring(startIndex));
-                this.initializeParameters(entity.Substring(genericBoundries.Item1 + 1, genericBoundries.Item1 - genericBoundries.Item2));
+                this.initializeParameters(entity.Substring(startIndex+genericBoundries.Item1 + 1, genericBoundries.Item2 - genericBoundries.Item1-1));
             }
             //Extract Port signals
             startIndex = entity_L.IndexOf("port");
             if(startIndex != -1)
             {
                 Tuple<int, int> portBoundries = this.getTopParenteses('(', ')', entity_L.Substring(startIndex));
-                this.initializeWires(entity.Substring(portBoundries.Item1 + 1, portBoundries.Item1 - portBoundries.Item2));
+                this.initializeWires(entity.Substring(startIndex+portBoundries.Item1 + 1, portBoundries.Item2 - portBoundries.Item1-1));
             }           
         }
 
         protected override void initializeParameters(string hdlCode)
         {
-            throw new NotImplementedException();
+            List<string[]> paramRaw = VHDLDataProcessing.separateElements(hdlCode);
+            this.parameters = new List<Parameter>();
+            foreach (string[] parLine in paramRaw)
+            {
+                if (parLine[0] != "")
+                {
+                    VHDLParameter param = new VHDLParameter();
+                    param.settings = this.settings;
+                    param.comment = parLine[1];
+                    param.initializeFromCodeLine(parLine[0]);
+                    this.parameters.Add(param);
+                }
+            }
         }
 
         protected override void initializeWires(string hdlCode)
         {
-            throw new NotImplementedException();
+            List<string[]> wiresRaw = VHDLDataProcessing.separateElements(hdlCode);
+            this.wires = new List<Wire>();
+            foreach (string[] wireLine in wiresRaw)
+            {
+                if (wireLine[0] != "")
+                {
+                    VHDLWire wire = new VHDLWire();
+                    wire.settings = this.settings;
+                    wire.comment = wireLine[1];
+                    wire.initializeFromCodeLine(wireLine[0]);
+                    this.wires.Add(wire);
+                }
+            }
         }
     }
 

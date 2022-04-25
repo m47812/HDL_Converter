@@ -17,12 +17,9 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// </summary>
         /// <param name="hdlModule"> hdl (header) code in string fromat</param>
         /// <param name="settings">settings object that will be used for the output</param>
-        public VeriModule(string hdlModule, Settings settings)
-        {
-            this.settings = settings;
-            this.initializeFormHDLCode(hdlModule);
+        public VeriModule(string hdlModule, Settings settings) : base(hdlModule, settings)
+        {        
         }
-
         /// <summary>
         /// Creates a copy of the module passed to it.
         /// </summary>

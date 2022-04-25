@@ -25,6 +25,19 @@ namespace HDL_Converter_Classes.HDL_Structures
         public List<Parameter> parameters = new List<Parameter>();
         public List<Wire> wires = new List<Wire>();
 
+        public HDLModule() { }
+
+        /// <summary>
+        /// Initializes a Module from HDL code in string format.
+        /// </summary>
+        /// <param name="hdlModule"> hdl (header) code in string fromat</param>
+        /// <param name="settings">settings object that will be used for the output</param>
+        public HDLModule(string hdlModule, Settings settings)
+        {
+            this.settings = settings;
+            this.initializeFormHDLCode(hdlModule);
+        }
+
         protected abstract void initializeFormHDLCode(string hdlCode);
         protected abstract void initializeParameters(string hdlCode);
         protected abstract void initializeWires(string hdlCode);

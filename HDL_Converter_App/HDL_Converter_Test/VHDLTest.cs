@@ -49,5 +49,26 @@ namespace HDL_Converter_Test
                 }
             }
         }
+
+        [TestMethod]
+        public void test_init_from_hdl_code()
+        {
+            string path = "@../../../../../Test_data/VHDL_Example_Entity.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            Settings testSettings = new Settings();
+            VHDLModule module = new VHDLModule(fileContent[0], testSettings);
+            Assert.IsTrue(module.parameters.Count == 2);
+            Assert.IsTrue(module.wires.Count == 6);
+            Assert.IsTrue(module.parameters[0].name == "row_size");
+            Assert.IsTrue(module.parameters[1].name == "colum_size");
+            Assert.IsTrue(module.parameters[0].value == "5");
+            Assert.IsTrue(module.parameters[0].comment == "Comment for constant");
+            Assert.IsTrue(module.wires[0].busSize == "std_ulogic");
+            Assert.IsTrue(module.wires[1].busSize == "std_ulogic_vector(7 downto 0)");
+            Assert.IsTrue(module.wires[5].busSize == "integer range 0 to row_size");
+            Assert.IsTrue(module.wires[0].direction == PortDirection.Input);
+            Assert.IsTrue(module.wires[4].direction == PortDirection.InOut);
+            Assert.IsTrue(module.wires[5].direction == PortDirection.Output);
+        }
     }
 }
