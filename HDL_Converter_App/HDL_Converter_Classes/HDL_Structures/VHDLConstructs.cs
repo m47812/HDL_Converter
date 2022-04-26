@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace HDL_Converter_Classes.HDL_Structures
 {
@@ -39,17 +40,38 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateHeaderParameters()
         {
-            throw new NotImplementedException();
+            StringBuilder headerParam = new StringBuilder("generic (" + System.Environment.NewLine);
+            foreach (var parameter in this.parameters)
+            {
+                headerParam.Append(parameter.generateHeaderLine());
+                if (parameter != this.parameters.Last()) headerParam.Append(';');
+                headerParam.AppendLine(parameter.buildComment());
+            }
+            headerParam.Append(");");
+            return headerParam.ToString();
         }
 
         public override string generateHeaderPort()
         {
-            throw new NotImplementedException();
+            StringBuilder headerPort = new StringBuilder("port (" + System.Environment.NewLine);
+            foreach(var wire in this.wires)
+            {
+                headerPort.Append(wire.generateHeaderLine());
+                if (wire != this.wires.Last()) headerPort.Append(';');
+                headerPort.AppendLine(wire.buildComment());
+            }
+            headerPort.Append(");");
+            return headerPort.ToString();
         }
 
         public override string generateModuleHeader()
         {
-            throw new NotImplementedException();
+            return this.headerOrComponentbuild(Resources.VHDL_ENTITY);
+        }
+
+        public string generateComponent()
+        {
+            return this.headerOrComponentbuild(Resources.VHDL_COMPONENT);
         }
 
         public override string generateModuleInstantiation()
@@ -63,6 +85,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                 foreach(var parameter in this.parameters)
                 {
                     parametersBuilt.Append(parameter.generateInstantiationLine());
+                    if (parameter != this.parameters.Last()) parametersBuilt.Append(',');
                     parametersBuilt.Append(parameter.buildComment());
                     parametersBuilt.Append(System.Environment.NewLine);
                 }
@@ -82,6 +105,7 @@ namespace HDL_Converter_Classes.HDL_Structures
                 foreach (var wire in this.wires)
                 {
                     portBuilt.Append(wire.generateInstantiationLine());
+                    if (wire != this.wires.Last()) portBuilt.Append(',');
                     portBuilt.Append(wire.buildComment());
                     portBuilt.Append(System.Environment.NewLine);
                 }
@@ -182,6 +206,21 @@ namespace HDL_Converter_Classes.HDL_Structures
                 }
             }
         }
+
+        private string headerOrComponentbuild(string templateString)
+        {
+            StringBuilder template = new StringBuilder(templateString);
+            template.Replace("$NAME$", this.name);
+            if (this.parameters.Count > 0)
+                template.Replace("$PARAMETERS$", this.generateHeaderParameters()+System.Environment.NewLine);
+            else
+                template.Replace("$PARAMETERS$", "");
+            if (this.wires.Count > 0)
+                template.Replace("$PORT$", this.generateHeaderPort());
+            else
+                template.Replace("$PORT$", "");
+            return template.ToString();
+        }
     }
 
     /// <summary>
@@ -214,7 +253,7 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateHeaderLine()
         {
-            string retString = this.name + " \t: ";
+            string retString = this.name + " : ";
             switch (this.direction)
             {
                 case PortDirection.UNKNOWN:
@@ -285,7 +324,9 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateHeaderLine()
         {
-            return this.name + " \t: " + this.dataType + " := " + this.value;
+            string headerline = this.name + " \t: " + this.dataType;
+            if(this.value != "") headerline += " := " + this.value;
+            return headerline;
         }
 
         public override string generateInstantiationLine()

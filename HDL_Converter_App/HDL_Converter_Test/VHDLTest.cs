@@ -71,5 +71,50 @@ namespace HDL_Converter_Test
             Assert.IsTrue(module.wires[5].direction == PortDirection.Output);
             Assert.IsTrue(module.name == "test_module");
         }
+
+        [TestMethod]
+        public void test_wire_declaration()
+        {
+            string path = "@../../../../../Test_data/VHDL_Example_Entity.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            Settings testSettings = new Settings();
+            VHDLModule module = new VHDLModule(fileContent[0], testSettings);
+            Assert.IsTrue(module.generateWireDeclaration() == fileContent[1]);
+        }
+
+        [TestMethod]
+        public void test_module_instantiation()
+        {
+            string path = "@../../../../../Test_data/VHDL_Example_Entity.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            Settings testSettings = new Settings();
+            VHDLModule module = new VHDLModule(fileContent[0], testSettings);
+            Assert.IsTrue(module.generateModuleInstantiation() == fileContent[2]);
+        }
+
+        [TestMethod]
+        public void test_entity_generation()
+        {
+            string path = "@../../../../../Test_data/VHDL_Example_Entity.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            Settings testSettings = new Settings();
+            VHDLModule module = new VHDLModule(fileContent[0], testSettings);
+            string entity = module.generateModuleHeader();
+            Assert.IsTrue(entity == fileContent[3]);
+        }
+
+        [TestMethod]
+        public void test_component_generation()
+        {
+            string path = "@../../../../../Test_data/VHDL_Example_Entity.txt";
+            string[] fileContent = GeneralTests.load_testdata_from_file(path);
+            Settings testSettings = new Settings();
+            VHDLModule module = new VHDLModule(fileContent[0], testSettings);
+            string component = module.generateComponent();
+            Assert.IsTrue(component == fileContent[4]);
+        }
+
     }
+
+    
 }

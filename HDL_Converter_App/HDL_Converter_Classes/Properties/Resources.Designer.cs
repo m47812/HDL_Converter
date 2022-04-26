@@ -168,6 +168,28 @@ namespace HDL_Converter_Classes.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die component $NAME$ is
+        ///$PARAMETERS$$PORT$
+        ///end component $NAME$; ähnelt.
+        /// </summary>
+        internal static string VHDL_COMPONENT {
+            get {
+                return ResourceManager.GetString("VHDL_COMPONENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die entity $NAME$ is
+        ///$PARAMETERS$$PORT$
+        ///end entity $NAME$; ähnelt.
+        /// </summary>
+        internal static string VHDL_ENTITY {
+            get {
+                return ResourceManager.GetString("VHDL_ENTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die inst_$NAME$ : component $NAME$
         ///$PARAMETERS$$PORT$; ähnelt.
         /// </summary>

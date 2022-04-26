@@ -10,6 +10,51 @@
         write_row_pointer : in unsigned(1 downto 0); --Comment 2
 
         read_data : inout std_ulogic_vector((9*8)-1 downto 0);
-        read_row_cnt : out integer range 0 to row_size;
+        read_row_cnt : out integer range 0 to row_size
     );
 end entity test_module;
+$signal clk : std_ulogic;
+signal write_data : std_ulogic_vector(7 downto 0);
+signal write_enable : std_ulogic;
+signal write_row_pointer : unsigned(1 downto 0);
+signal read_data : std_ulogic_vector((9*8)-1 downto 0);
+signal read_row_cnt : integer range 0 to row_size;
+$inst_test_module : component test_module
+    generic map(
+    row_size 	=> 	row_size,
+    colum_size 	=> 	colum_size
+    )
+    port map(
+    clk => clk,
+    write_data => write_data,
+    write_enable => write_enable,
+    write_row_pointer => write_row_pointer,
+    read_data => read_data,
+    read_row_cnt => read_row_cnt
+    );$entity test_module is
+generic (
+row_size 	: integer := 5;
+colum_size 	: integer
+);
+port (
+clk : in std_ulogic;
+write_data : in std_ulogic_vector(7 downto 0);
+write_enable : in std_ulogic;
+write_row_pointer : in unsigned(1 downto 0);
+read_data : inout std_ulogic_vector((9*8)-1 downto 0);
+read_row_cnt : out integer range 0 to row_size
+);
+end entity test_module;$component test_module is
+generic (
+row_size 	: integer := 5;
+colum_size 	: integer
+);
+port (
+clk : in std_ulogic;
+write_data : in std_ulogic_vector(7 downto 0);
+write_enable : in std_ulogic;
+write_row_pointer : in unsigned(1 downto 0);
+read_data : inout std_ulogic_vector((9*8)-1 downto 0);
+read_row_cnt : out integer range 0 to row_size
+);
+end component test_module;
