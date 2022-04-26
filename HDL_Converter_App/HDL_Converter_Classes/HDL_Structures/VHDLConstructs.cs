@@ -135,7 +135,7 @@ namespace HDL_Converter_Classes.HDL_Structures
             StringBuilder constants = new StringBuilder();
             foreach(var parameter in this.parameters)
             {
-                constants.Append(parameter.generateWireDeclarationLine()+";");
+                constants.Append(parameter.generateWireDeclarationLine());
                 constants.AppendLine(parameter.buildComment());
             }
             return constants.ToString();
