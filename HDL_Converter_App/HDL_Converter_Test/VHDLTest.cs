@@ -69,6 +69,7 @@ namespace HDL_Converter_Test
             Assert.IsTrue(module.wires[0].direction == PortDirection.Input);
             Assert.IsTrue(module.wires[4].direction == PortDirection.InOut);
             Assert.IsTrue(module.wires[5].direction == PortDirection.Output);
+            Assert.IsTrue(module.name == "test_module");
         }
     }
 }

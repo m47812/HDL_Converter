@@ -81,6 +81,7 @@ namespace HDL_Converter_Classes.HDL_Structures
             //Find entity boundries
             string entity_L = hdlCode.ToLower();
             int startIndex = entity_L.IndexOf("entity") + 6;
+            this.name = hdlCode.Substring(startIndex, hdlCode.Substring(startIndex).IndexOf(" is")).Trim();
             if (startIndex == -1) throw new FormatException("Beginning of entity not found");
             int endIndex = entity_L.IndexOf("end entity", startIndex);
             if (endIndex == -1) throw new FormatException("Entity end not found (only one whitspace between \"entity\" and \"end\" tollerated)");
