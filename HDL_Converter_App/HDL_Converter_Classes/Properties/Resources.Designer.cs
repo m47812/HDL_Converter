@@ -19,7 +19,7 @@ namespace HDL_Converter_Classes.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -164,6 +164,16 @@ namespace HDL_Converter_Classes.Properties {
         internal static string VERILOG_TESTBENCH_TOP {
             get {
                 return ResourceManager.GetString("VERILOG_TESTBENCH_TOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die inst_$NAME$ : component $NAME$
+        ///$PARAMETERS$$PORT$; ähnelt.
+        /// </summary>
+        internal static string VHDL_INSTANCE {
+            get {
+                return ResourceManager.GetString("VHDL_INSTANCE", resourceCulture);
             }
         }
     }

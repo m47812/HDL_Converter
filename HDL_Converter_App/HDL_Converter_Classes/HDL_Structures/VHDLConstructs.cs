@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HDL_Converter_Classes.Properties;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -53,7 +54,46 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateModuleInstantiation()
         {
-            throw new NotImplementedException();
+            StringBuilder template = new StringBuilder(Resources.VHDL_INSTANCE);
+            template.Replace("$NAME$", this.name);
+            if (this.parameters.Count > 0)
+            {
+                StringBuilder parmeterscontainer = new StringBuilder("    generic map(" + System.Environment.NewLine+"*)");
+                StringBuilder parametersBuilt = new StringBuilder();
+                foreach(var parameter in this.parameters)
+                {
+                    parametersBuilt.Append(parameter.generateInstantiationLine());
+                    parametersBuilt.Append(parameter.buildComment());
+                    parametersBuilt.Append(System.Environment.NewLine);
+                }
+                parmeterscontainer.Replace("*",parametersBuilt.ToString());
+                parmeterscontainer.Replace("\n", "\n    ");
+                parmeterscontainer.Append(System.Environment.NewLine);              
+                template.Replace("$PARAMETERS$", parmeterscontainer.ToString());
+            }
+            else
+            {
+                template.Replace("$PARAMETERS$", "");
+            }
+            if(this.wires.Count > 0)
+            {
+                StringBuilder portcontainer = new StringBuilder("    port map(" + System.Environment.NewLine + "*)");
+                StringBuilder portBuilt = new StringBuilder();
+                foreach (var wire in this.wires)
+                {
+                    portBuilt.Append(wire.generateInstantiationLine());
+                    portBuilt.Append(wire.buildComment());
+                    portBuilt.Append(System.Environment.NewLine);
+                }
+                portcontainer.Replace("*", portBuilt.ToString());
+                portcontainer.Replace("\n", "\n    ");
+                template.Replace("$PORT$", portcontainer.ToString());
+            }
+            else
+            {
+                template.Replace("$PORT$", "");
+            }
+            return template.ToString();
         }
 
         public override string generateParameterDeclaration()
@@ -189,7 +229,7 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateInstantiationLine()
         {
-            string retString = this.name + " \t=> \t";
+            string retString = this.name + " => ";
             if (!this.settings.emptyIOs) retString += this.name;
             return retString;
         }

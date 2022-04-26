@@ -226,4 +226,9 @@ $INSTANCES$
 endmodule</value>
     <comment>Template for creating the toplevel testbench module</comment>
   </data>
+  <data name="VHDL_INSTANCE" xml:space="preserve">
+    <value>inst_$NAME$ : component $NAME$
+$PARAMETERS$$PORT$;</value>
+    <comment>Template for VHDL Instantiation</comment>
+  </data>
 </root>
