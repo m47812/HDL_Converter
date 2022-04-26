@@ -113,7 +113,13 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateWireDeclaration()
         {
-            throw new NotImplementedException();
+            StringBuilder signals = new StringBuilder();
+            foreach(var wire in this.wires)
+            {
+                signals.Append(wire.generateWireDeclarationLine());
+                signals.AppendLine(wire.buildComment());
+            }
+            return signals.ToString();
         }
 
         protected override void initializeFormHDLCode(string hdlCode)
