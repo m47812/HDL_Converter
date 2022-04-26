@@ -38,6 +38,16 @@ namespace HDL_Converter_Classes.HDL_Structures
         {
         }
 
+        public VHDLModule(VHDLModule otherModule)
+        {
+            this.settings = otherModule.settings;
+            this.name = otherModule.name;
+            foreach (VHDLWire otherWire in otherModule.wires)
+                this.wires.Add(new VHDLWire(otherWire));
+            foreach (VHDLParameter otherParam in otherModule.parameters)
+                this.parameters.Add(new VHDLParameter(otherParam));
+        }
+
         public override string generateHeaderParameters()
         {
             StringBuilder headerParam = new StringBuilder("generic (" + System.Environment.NewLine);
@@ -122,7 +132,13 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateParameterDeclaration()
         {
-            throw new NotImplementedException();
+            StringBuilder constants = new StringBuilder();
+            foreach(var parameter in this.parameters)
+            {
+                constants.Append(parameter.generateWireDeclarationLine()+";");
+                constants.AppendLine(parameter.buildComment());
+            }
+            return constants.ToString();
         }
 
         public override string generateTestbenchTopLevel()
@@ -228,6 +244,9 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public class VHDLWire : Wire
     {
+        public VHDLWire() { }
+        public VHDLWire(VHDLWire otherWire) : base(otherWire) { }
+
         public override string buildComment()
         {
             int commentType = settings.includeInputComments ? 1 : 0;
@@ -316,6 +335,12 @@ namespace HDL_Converter_Classes.HDL_Structures
     public class VHDLParameter : Parameter
     {
         public string dataType;
+
+        public VHDLParameter() { }
+        public VHDLParameter(VHDLParameter otherParameter) : base(otherParameter)
+        {
+            this.dataType = otherParameter.dataType;
+        }
         public override string buildComment()
         {
             if (settings.includeInputComments && this.comment != "") return (" --" + this.comment);

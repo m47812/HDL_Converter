@@ -243,4 +243,86 @@ end entity $NAME$;</value>
 $PARAMETERS$$PORT$;</value>
     <comment>Template for VHDL Instantiation</comment>
   </data>
+  <data name="VHDL_MODULE_SYNTAX" xml:space="preserve">
+    <value>----------------------------------------------------------------------------
+--
+-- Name: $NAME$
+-- Description:
+--
+-- Version: 1.0.0
+-- Date: $DATE$
+--
+-- Company: 
+-- Engineer:
+-- 
+---------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+$ENTITY$
+
+architecture rtl of $NAME$ is
+----------------------------------------------------------
+-- Components
+----------------------------------------------------------
+$COMPONENTS$
+----------------------------------------------------------
+-- Constants
+----------------------------------------------------------
+$CONSTANTS$
+----------------------------------------------------------
+-- Signal Declarations
+----------------------------------------------------------
+$WIREDECLARATIONS$
+begin
+----------------------------------------------------------
+-- $SECTIONCOMMENT$
+----------------------------------------------------------
+$INSTANCES$
+end architecture rtl;</value>
+    <comment>The template for creating a VHDL module</comment>
+  </data>
+  <data name="VHDL_TESTBENCH_TOP" xml:space="preserve">
+    <value>----------------------------------------------------------------------------
+--
+-- Name: $NAME$
+-- Description:
+--
+-- Version: 1.0.0
+-- Date: $DATE$
+--
+-- Company: 
+-- Engineer:
+-- 
+---------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity $NAME$ is
+end entity $NAME$;
+architecture tb of $NAME$ is
+----------------------------------------------------------
+-- Components
+----------------------------------------------------------
+$COMPONENTS$
+----------------------------------------------------------
+-- Constants
+----------------------------------------------------------
+$CONSTANTS$
+----------------------------------------------------------
+-- Signal Declarations
+----------------------------------------------------------
+$WIREDECLARATIONS$
+begin
+----------------------------------------------------------
+-- $SECTIONCOMMENT$
+----------------------------------------------------------
+
+$INSTANCES$
+
+end architecture tb;</value>
+    <comment>Template for the toplevel file of a VHDL testbench</comment>
+  </data>
 </root>

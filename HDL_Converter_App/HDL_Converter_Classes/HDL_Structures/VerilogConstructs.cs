@@ -302,13 +302,8 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public VeriWire() { }
 
-        public VeriWire(VeriWire otherWire)
+        public VeriWire(VeriWire otherWire) : base(otherWire)
         {
-            this.name = otherWire.name;
-            this.settings = otherWire.settings;
-            this.comment = otherWire.comment;
-            this.busSize = otherWire.busSize;
-            this.direction = otherWire.direction;
             this.signed = otherWire.signed;
         }
 
@@ -514,13 +509,8 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// Copy constructor creates a new object with same properties
         /// </summary>
         /// <param name="otherParameter">object to copy</param>
-        public VeriParameter(VeriParameter otherParameter)
-        {
-            this.name = otherParameter.name;
-            this.settings = otherParameter.settings;
-            this.value = otherParameter.value;
-            this.comment = otherParameter.comment;
-        }
+        public VeriParameter(VeriParameter otherParameter) : base(otherParameter) { }
+        
 
         public override string generateInstantiationLine()
         {
