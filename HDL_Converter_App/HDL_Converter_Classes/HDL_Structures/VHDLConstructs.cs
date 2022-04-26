@@ -143,12 +143,45 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateTestbenchTopLevel()
         {
-            throw new NotImplementedException();
+            VHDLModule verify = new VHDLModule(this);
+            verify.invertAllWires();
+            verify.name = "verify_" + this.name;
+            StringBuilder builder = new StringBuilder(Resources.VHDL_TESTBENCH_TOP);
+            StringBuilder components = new StringBuilder();
+            components.AppendLine(this.generateComponent());
+            components.AppendLine();
+            components.AppendLine(verify.generateComponent());
+            builder.Replace("$COMPONENTS$", components.ToString());
+
+            StringBuilder instances = new StringBuilder();
+            instances.AppendLine(this.generateModuleInstantiation());
+            instances.AppendLine();
+            instances.AppendLine(verify.generateModuleInstantiation());
+            builder.Replace("$INSTANCES$",instances.ToString());
+
+            builder.Replace("$NAME$", "tb_" + this.name);
+            builder.Replace("$SECTIONCOMMENT$", "Testbench Modules");
+            builder.Replace("$CONSTANTS$", this.generateParameterDeclaration());
+            builder.Replace("$WIREDECLARATIONS$", this.generateWireDeclaration());
+            builder.Replace("$DATE$", System.DateTime.Now.ToString());
+            return builder.ToString();
         }
 
         public override string generateTestbenchVerify()
         {
-            throw new NotImplementedException();
+            VHDLModule verify = new VHDLModule(this);
+            verify.invertAllWires();
+            verify.name = "verify_" + this.name;
+            StringBuilder builder = new StringBuilder(Resources.VHDL_MODULE_SYNTAX);
+            builder.Replace("$INSTANCES$", "");
+            builder.Replace("$COMPONENTS$", System.Environment.NewLine);
+            builder.Replace("$CONSTANTS$", System.Environment.NewLine);
+            builder.Replace("$WIREDECLARATIONS$", System.Environment.NewLine);
+            builder.Replace("$SECTIONCOMMENT$", "Verification Code");
+            builder.Replace("$NAME$", verify.name);
+            builder.Replace("$ENTITY$", verify.generateModuleHeader());
+            builder.Replace("$DATE$", System.DateTime.Now.ToString());
+            return builder.ToString();
         }
 
         public override string generateWireDeclaration()
