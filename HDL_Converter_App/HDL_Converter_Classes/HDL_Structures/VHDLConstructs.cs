@@ -38,6 +38,11 @@ namespace HDL_Converter_Classes.HDL_Structures
         {
         }
 
+        /// <summary>
+        /// Copy Constructor: Creates a copy of the other Module creating new objects for wires
+        /// and parameters but using same settings object
+        /// </summary>
+        /// <param name="otherModule">Module to copy</param>
         public VHDLModule(VHDLModule otherModule)
         {
             this.settings = otherModule.settings;
@@ -48,6 +53,10 @@ namespace HDL_Converter_Classes.HDL_Structures
                 this.parameters.Add(new VHDLParameter(otherParam));
         }
 
+        /// <summary>
+        /// Generates the generics of a modules entity
+        /// </summary>
+        /// <returns>The generics wrapped in "generic ()"</returns>
         public override string generateHeaderParameters()
         {
             StringBuilder headerParam = new StringBuilder("generic (" + System.Environment.NewLine);
@@ -61,6 +70,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             return headerParam.ToString();
         }
 
+        /// <summary>
+        /// Generates the port of a modules entity
+        /// </summary>
+        /// <returns>The port signals wrapped in "port ()"</returns>
         public override string generateHeaderPort()
         {
             StringBuilder headerPort = new StringBuilder("port (" + System.Environment.NewLine);
@@ -74,16 +87,28 @@ namespace HDL_Converter_Classes.HDL_Structures
             return headerPort.ToString();
         }
 
+        /// <summary>
+        /// Generates a modules entity
+        /// </summary>
+        /// <returns>Entity of the module</returns>
         public override string generateModuleHeader()
         {
             return this.headerOrComponentbuild(Resources.VHDL_ENTITY);
         }
 
+        /// <summary>
+        /// Generates a component declaration (same as entity but using the word component instestead)
+        /// </summary>
+        /// <returns>component declaration</returns>
         public string generateComponent()
         {
             return this.headerOrComponentbuild(Resources.VHDL_COMPONENT);
         }
 
+        /// <summary>
+        /// Creates the instantiation code of the module
+        /// </summary>
+        /// <returns>instantiation code</returns>
         public override string generateModuleInstantiation()
         {
             StringBuilder template = new StringBuilder(Resources.VHDL_INSTANCE);
@@ -130,6 +155,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             return template.ToString();
         }
 
+        /// <summary>
+        /// Generates the code declaring all generics as constants
+        /// </summary>
+        /// <returns>constants given by generics</returns>
         public override string generateParameterDeclaration()
         {
             StringBuilder constants = new StringBuilder();
@@ -141,6 +170,11 @@ namespace HDL_Converter_Classes.HDL_Structures
             return constants.ToString();
         }
 
+        /// <summary>
+        /// Creates a testbench toplevel file content with a instance of the original module and the verify
+        /// with inverted ports and connects the two modules
+        /// </summary>
+        /// <returns>Top level file content</returns>
         public override string generateTestbenchTopLevel()
         {
             VHDLModule verify = new VHDLModule(this);
@@ -167,6 +201,11 @@ namespace HDL_Converter_Classes.HDL_Structures
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Creates the testbench verify module containing the same entity as the original module but
+        /// with inverted data directions
+        /// </summary>
+        /// <returns>File content of the verify module</returns>
         public override string generateTestbenchVerify()
         {
             VHDLModule verify = new VHDLModule(this);
@@ -184,6 +223,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Declares all signals contained in the modules entity
+        /// </summary>
+        /// <returns>Declaration of all signals in the entity</returns>
         public override string generateWireDeclaration()
         {
             StringBuilder signals = new StringBuilder();
@@ -195,6 +238,11 @@ namespace HDL_Converter_Classes.HDL_Structures
             return signals.ToString();
         }
 
+        /// <summary>
+        /// Initializes the module from a given HDL Code (containing the enity of a module)
+        /// </summary>
+        /// <param name="hdlCode">HDL code containing the entity</param>
+        /// <exception cref="FormatException">When the module does not contain a proper entity beginning or ending</exception>
         protected override void initializeFormHDLCode(string hdlCode)
         {
             //Find entity boundries
@@ -222,6 +270,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             }           
         }
 
+        /// <summary>
+        /// Subfunction of initializeFormHDLCode that initializes the generics
+        /// </summary>
+        /// <param name="hdlCode">generics section of the entity</param>
         protected override void initializeParameters(string hdlCode)
         {
             List<string[]> paramRaw = VHDLDataProcessing.separateElements(hdlCode);
@@ -239,6 +291,10 @@ namespace HDL_Converter_Classes.HDL_Structures
             }
         }
 
+        /// <summary>
+        /// Subfunction of initializeFormHDLCode that initializes the ports signals
+        /// </summary>
+        /// <param name="hdlCode">port section of the entity</param>
         protected override void initializeWires(string hdlCode)
         {
             List<string[]> wiresRaw = VHDLDataProcessing.separateElements(hdlCode);
@@ -256,6 +312,12 @@ namespace HDL_Converter_Classes.HDL_Structures
             }
         }
 
+        /// <summary>
+        /// Subfunction that can build the entity or component declaration from given template
+        /// combined in one function since entity and component output only differ by one word (entity or component)
+        /// </summary>
+        /// <param name="templateString">The entity or component template</param>
+        /// <returns>Entity or component declaration</returns>
         private string headerOrComponentbuild(string templateString)
         {
             StringBuilder template = new StringBuilder(templateString);
