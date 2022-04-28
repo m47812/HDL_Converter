@@ -19,7 +19,7 @@ Here you have the Options:
  ![Main Menu with HDL](/Documentation/1_Images/Core/HDLInput.PNG)
  
  ### HDL Output Selection
- 1) Once you have entered a Verilog module you will see the part of the image bellow marked with "1".
+ 1) Once you have entered a Verilog/VHDL module you will see the part of the image bellow marked with "1".
  2) Here again you have the following options:
  - `d` --> Will output code declaring all Wires in your module (excluding parameters)
  - `i` --> Will output the instantiation code for the module header you have entered before
@@ -34,7 +34,7 @@ Here you have the Options:
 ### Settings Menu
 The Settings Menu can be entered and exited by entering `-m` in the console. Here you can change configurations to the HDL Language that you are using and configure the output style you want.
 Configurations are:
-- HDL Language --> The HDL Language your header uses and output will be in (**Please Note that only Verilog is Supported in the current Version**). 
+- HDL Language --> The HDL Language your header uses and output will be in. 
 - Emptiy IOs --> When set to `true` an instantiation will not contain any wires e.g. '.mySignal()'. If set to `false` (default) the instantiated module will be passed wires of the same name as the port e.g. '.mySignal(mySignal)'.
 - User Comments --> If enabled user comments that were included in the HDL input will be added to the wire instantiation and declaration.
 - Direction Comments --> If enabled every signal will contain a comment about the data direction of the wire (if it is an input or output) as well as (in case of a vector) the vector size.
