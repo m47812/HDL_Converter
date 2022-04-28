@@ -4,31 +4,31 @@
 [![License](https://img.shields.io/badge/License-AGPL_3.0-blue.svg)](/LICENSE)
 [![C#](https://img.shields.io/badge/Software-C%23-green)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 
-A simple tool that can be used to convert the header syntax of a verilog module to an instantiation syntax and create testbench structures (top level and verify). 
+A simple tool that can be used to convert the header syntax of a verilog module or VHDL Entity to an instantiation syntax and create testbench 
+structures (top level and verify). 
 The project is aimed at removing the need for tedious refactoring of module headers when instantiating modules or verifying individual modules with testbenches.
 
 ## Feature Overview
 **Language Support**
 
 [![Verilog](https://img.shields.io/badge/Verilog-Supported-brightgreen)]()
-[![VHDL](https://img.shields.io/badge/VHDL-Not%20Supported-red)]()
+[![VHDL](https://img.shields.io/badge/VHDL-Supported-brightgreen)]()
 
 **Features Included**
-- Conversion of Verilog header to instantiation of the module
-- Conversion of Verilog header to declare all wires in the module
+- Conversion of Verilog or VHDL header/entity to instantiation of the module
+- Conversion of Verilog or VHDL header/entity to declare all wires in the module
 - Automatic generation of testbench structure (testbench toplevel, verify module)
 - Comment creation for instantiaton making port direction easily visible
-- Parsing of Verilog header syntax to objects and attributes (easy expandability to othre hdl code generations functions)
+- Parsing of Verilog/VHDL header syntax to objects and attributes (easy expandability to othre hdl code generations functions)
 - Flexibility to support other HDL languages
 
 **Features Planed**
-- VHDL support
 - Cross HDL Generation/Translation for existing functions
 - Updating of existing instantiations with new wires
 
 
 ## How to Use
-[![Release](https://img.shields.io/badge/Latest%20Release-V1.1.0-green)](https://github.com/m47812/HDL_Converter/releases/latest)
+[![Release](https://img.shields.io/badge/Latest%20Release-V1.2.0-green)](https://github.com/m47812/HDL_Converter/releases/latest)
 
 You can finde the latest release versions executables [here](https://github.com/m47812/HDL_Converter/releases/latest).
 
