@@ -141,15 +141,38 @@ namespace HDL_Converter_GUI
             string inputHDL = inputPanel.getHDLInput();
             if (inputHDL != null)
             {
-                converter.hdlInput = inputHDL;
-                return true;
+                if (checkCorrectHDLLanguage(inputHDL))
+                {
+                    converter.hdlInput = inputHDL;
+                    return true;
+                }               
             }
             else
             {
                 informGUI(new GUIEvent("No HDL Code provided! Please Insert HDL Code to convert into Textbox",
                     GUIEvent.Severity.Warning), new EventArgs());
-                return false;
             }
+            return false;
+        }
+        private bool checkCorrectHDLLanguage(string inputHDL)
+        {
+            MessageBoxResult result;
+            if (settings.language == HDLLanguage.Verilog && inputHDL.ToLower().Contains("entity")){
+                result = MessageBox.Show("Verilog was selected as language but the inputed code contains VHDL keywords." +
+                    " Do you want to continue?", "Warning selected HDL", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            }
+            else if(settings.language == HDLLanguage.VHDL && inputHDL.ToLower().Contains("module"))
+            {
+                result = MessageBox.Show("VHDL was selected as language but the inputed code contains Verilog keywords." +
+                    " Do you want to continue?", "Warning selected HDL", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            }
+            else
+            {
+                return true;
+            }
+            if (result == MessageBoxResult.Yes)
+                return true;
+            return false;
         }
     }
 }
