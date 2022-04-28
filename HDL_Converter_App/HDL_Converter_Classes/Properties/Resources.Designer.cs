@@ -19,7 +19,7 @@ namespace HDL_Converter_Classes.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -164,6 +164,98 @@ namespace HDL_Converter_Classes.Properties {
         internal static string VERILOG_TESTBENCH_TOP {
             get {
                 return ResourceManager.GetString("VERILOG_TESTBENCH_TOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die component $NAME$ is
+        ///$PARAMETERS$$PORT$
+        ///end component $NAME$; ähnelt.
+        /// </summary>
+        internal static string VHDL_COMPONENT {
+            get {
+                return ResourceManager.GetString("VHDL_COMPONENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die entity $NAME$ is
+        ///$PARAMETERS$$PORT$
+        ///end entity $NAME$; ähnelt.
+        /// </summary>
+        internal static string VHDL_ENTITY {
+            get {
+                return ResourceManager.GetString("VHDL_ENTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die inst_$NAME$ : component $NAME$
+        ///$PARAMETERS$$PORT$; ähnelt.
+        /// </summary>
+        internal static string VHDL_INSTANCE {
+            get {
+                return ResourceManager.GetString("VHDL_INSTANCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ----------------------------------------------------------------------------
+        ///--
+        ///-- Name: $NAME$
+        ///-- Description:
+        ///--
+        ///-- Version: 1.0.0
+        ///-- Date: $DATE$
+        ///--
+        ///-- Company: 
+        ///-- Engineer:
+        ///-- 
+        ///---------------------------------------------------------------------------
+        ///library ieee;
+        ///use ieee.std_logic_1164.all;
+        ///use ieee.numeric_std.all;
+        ///
+        ///$ENTITY$
+        ///
+        ///architecture rtl of $NAME$ is
+        ///----------------------------------------------------------
+        ///-- Components
+        ///-------------------------------------------------- [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string VHDL_MODULE_SYNTAX {
+            get {
+                return ResourceManager.GetString("VHDL_MODULE_SYNTAX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ----------------------------------------------------------------------------
+        ///--
+        ///-- Name: $NAME$
+        ///-- Description:
+        ///--
+        ///-- Version: 1.0.0
+        ///-- Date: $DATE$
+        ///--
+        ///-- Company: 
+        ///-- Engineer:
+        ///-- 
+        ///---------------------------------------------------------------------------
+        ///library ieee;
+        ///use ieee.std_logic_1164.all;
+        ///use ieee.numeric_std.all;
+        ///
+        ///entity $NAME$ is
+        ///end entity $NAME$;
+        ///architecture tb of $NAME$ is
+        ///----------------------------------------------------------
+        ///-- Components
+        ///------------------------- [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string VHDL_TESTBENCH_TOP {
+            get {
+                return ResourceManager.GetString("VHDL_TESTBENCH_TOP", resourceCulture);
             }
         }
     }

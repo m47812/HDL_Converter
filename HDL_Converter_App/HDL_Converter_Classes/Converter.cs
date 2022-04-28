@@ -109,6 +109,9 @@ namespace HDL_Converter_Classes
                 case HDLLanguage.Verilog:
                     this.module = new VeriModule(this.hdlInput, this.settings);
                     break;
+                case HDLLanguage.VHDL:
+                    this.module = new VHDLModule(this.hdlInput, this.settings);
+                    break;
                 default:
                     throw new NotImplementedException("HDL Language not supported");
             }

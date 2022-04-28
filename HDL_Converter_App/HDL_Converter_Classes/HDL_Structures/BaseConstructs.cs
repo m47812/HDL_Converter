@@ -25,6 +25,19 @@ namespace HDL_Converter_Classes.HDL_Structures
         public List<Parameter> parameters = new List<Parameter>();
         public List<Wire> wires = new List<Wire>();
 
+        public HDLModule() { }
+
+        /// <summary>
+        /// Initializes a Module from HDL code in string format.
+        /// </summary>
+        /// <param name="hdlModule"> hdl (header) code in string fromat</param>
+        /// <param name="settings">settings object that will be used for the output</param>
+        public HDLModule(string hdlModule, Settings settings)
+        {
+            this.settings = settings;
+            this.initializeFormHDLCode(hdlModule);
+        }
+
         protected abstract void initializeFormHDLCode(string hdlCode);
         protected abstract void initializeParameters(string hdlCode);
         protected abstract void initializeWires(string hdlCode);
@@ -123,6 +136,13 @@ namespace HDL_Converter_Classes.HDL_Structures
             this.name = name;
         }
 
+        public ModuleComponent(ModuleComponent otherModuleComponent)
+        {
+            this.name = otherModuleComponent.name;
+            this.comment = otherModuleComponent.comment;
+            this.settings = otherModuleComponent.settings;
+        }
+
         /// <summary>
         /// This Function Initializes the obejcts attributes from a line of HDL Code (Excluding Comments)
         /// </summary>
@@ -163,6 +183,16 @@ namespace HDL_Converter_Classes.HDL_Structures
     public abstract class Parameter : ModuleComponent
     {
         public string value;
+
+        public Parameter() { }
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        /// <param name="otherParameter">The object to copy</param>
+        public Parameter(Parameter otherParameter) : base(otherParameter)
+        {
+            value = otherParameter.value;
+        }
     }
 
     /// <summary>
@@ -170,6 +200,7 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public abstract class Wire : ModuleComponent
     {
+
         /// <summary>
         /// The data direction of the IO
         /// </summary>
@@ -180,6 +211,17 @@ namespace HDL_Converter_Classes.HDL_Structures
         /// </summary>
         /// <example>"[7:0]" for Verilog or "(7 downto 0)" for VHDL</example>
         public string busSize = "";
+
+        public Wire() { }
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        /// <param name="otherWire">The object to copy</param>
+        public Wire(Wire otherWire) : base(otherWire)
+        {
+            this.busSize = otherWire.busSize;
+            this.direction = otherWire.direction;
+        }
 
         /// <summary>
         /// Inverts the port direction

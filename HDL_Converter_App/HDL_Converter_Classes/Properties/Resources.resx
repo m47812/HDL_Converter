@@ -226,4 +226,103 @@ $INSTANCES$
 endmodule</value>
     <comment>Template for creating the toplevel testbench module</comment>
   </data>
+  <data name="VHDL_COMPONENT" xml:space="preserve">
+    <value>component $NAME$ is
+$PARAMETERS$$PORT$
+end component $NAME$;</value>
+    <comment>Template for a VHDL Component declaration</comment>
+  </data>
+  <data name="VHDL_ENTITY" xml:space="preserve">
+    <value>entity $NAME$ is
+$PARAMETERS$$PORT$
+end entity $NAME$;</value>
+    <comment>Template for a VHDL Entity</comment>
+  </data>
+  <data name="VHDL_INSTANCE" xml:space="preserve">
+    <value>inst_$NAME$ : component $NAME$
+$PARAMETERS$$PORT$;</value>
+    <comment>Template for VHDL Instantiation</comment>
+  </data>
+  <data name="VHDL_MODULE_SYNTAX" xml:space="preserve">
+    <value>----------------------------------------------------------------------------
+--
+-- Name: $NAME$
+-- Description:
+--
+-- Version: 1.0.0
+-- Date: $DATE$
+--
+-- Company: 
+-- Engineer:
+-- 
+---------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+$ENTITY$
+
+architecture rtl of $NAME$ is
+----------------------------------------------------------
+-- Components
+----------------------------------------------------------
+$COMPONENTS$
+----------------------------------------------------------
+-- Constants
+----------------------------------------------------------
+$CONSTANTS$
+----------------------------------------------------------
+-- Signal Declarations
+----------------------------------------------------------
+$WIREDECLARATIONS$
+begin
+----------------------------------------------------------
+-- $SECTIONCOMMENT$
+----------------------------------------------------------
+$INSTANCES$
+end architecture rtl;</value>
+    <comment>The template for creating a VHDL module</comment>
+  </data>
+  <data name="VHDL_TESTBENCH_TOP" xml:space="preserve">
+    <value>----------------------------------------------------------------------------
+--
+-- Name: $NAME$
+-- Description:
+--
+-- Version: 1.0.0
+-- Date: $DATE$
+--
+-- Company: 
+-- Engineer:
+-- 
+---------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity $NAME$ is
+end entity $NAME$;
+architecture tb of $NAME$ is
+----------------------------------------------------------
+-- Components
+----------------------------------------------------------
+$COMPONENTS$
+----------------------------------------------------------
+-- Constants
+----------------------------------------------------------
+$CONSTANTS$
+----------------------------------------------------------
+-- Signal Declarations
+----------------------------------------------------------
+$WIREDECLARATIONS$
+begin
+----------------------------------------------------------
+-- $SECTIONCOMMENT$
+----------------------------------------------------------
+
+$INSTANCES$
+
+end architecture tb;</value>
+    <comment>Template for the toplevel file of a VHDL testbench</comment>
+  </data>
 </root>
