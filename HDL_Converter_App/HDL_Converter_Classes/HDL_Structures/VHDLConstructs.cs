@@ -444,14 +444,14 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public override string generateHeaderLine()
         {
-            string headerline = this.name + " \t: " + this.dataType;
+            string headerline = this.name + " : " + this.dataType;
             if(this.value != "") headerline += " := " + this.value;
             return headerline;
         }
 
         public override string generateInstantiationLine()
         {
-            string retString = this.name + " \t=> \t";
+            string retString = this.name + " => ";
             if (!this.settings.emptyIOs) retString += this.name;
             return retString;
         }
