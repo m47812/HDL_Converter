@@ -7,7 +7,6 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     public abstract class SignalType
     {
-        public abstract void buildFromHDL();
         public abstract string buildHDLFormat();
     }
 
@@ -21,7 +20,12 @@ namespace HDL_Converter_Classes.HDL_Structures
 
         public static VeriSignalType createSignal(string busSize, bool signed)
         {
-            throw new NotImplementedException();
+            VeriSignalType retSignal;
+            if(busSize == "")
+                retSignal = new VeriSignalTypeBoolean();
+            else
+                retSignal = new VeriSignalTypeBus(busSize,signed);
+            return retSignal;
         }
 
     }
@@ -32,17 +36,29 @@ namespace HDL_Converter_Classes.HDL_Structures
     class VeriSignalTypeBus : VeriSignalType
     {
         public bool signed;
-        public int lowerBit;
-        public int upperBit;
+        public string lowerBit;
+        public string upperBit;
 
-        public override void buildFromHDL()
+        public VeriSignalTypeBus() 
         {
-            throw new NotImplementedException();
+            lowerBit = "";
+            upperBit = "";
+            signed = false;
+        }
+        public VeriSignalTypeBus(string busSize, bool signed)
+        {
+            this.signed = signed;
+            int opening = busSize.IndexOf('[');
+            int separator = busSize.IndexOf(':');
+            int closing = busSize.IndexOf(']');
+            this.upperBit = busSize.Substring(opening + 1, separator - opening - 1);
+            this.lowerBit = busSize.Substring(separator + 1, closing - separator - 1);
         }
 
         public override string buildHDLFormat()
         {
-            throw new NotImplementedException();
+            if (signed) return "signed [" + upperBit + ":" + lowerBit + "]";
+            else return "[" + upperBit + ":" + lowerBit + "]";
         }
     }
 
@@ -51,14 +67,9 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     class VeriSignalTypeBoolean : VeriSignalType
     {
-        public override void buildFromHDL()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string buildHDLFormat()
         {
-            throw new NotImplementedException();
+            return "";
         }
     }
 
@@ -71,11 +82,6 @@ namespace HDL_Converter_Classes.HDL_Structures
     public class VHDLSignalType : SignalType
     {
         public static VHDLSignalType createSignal(string busSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void buildFromHDL()
         {
             throw new NotImplementedException();
         }
@@ -97,11 +103,6 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     class VHDLSignalTypeBoolean : VHDLSignalType
     {
-        public override void buildFromHDL()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string buildHDLFormat()
         {
             throw new NotImplementedException();
@@ -119,11 +120,6 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     class VHDLSignalTypeDecimal : VHDLSignalType
     {
-        public override void buildFromHDL()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string buildHDLFormat()
         {
             throw new NotImplementedException();
@@ -141,10 +137,6 @@ namespace HDL_Converter_Classes.HDL_Structures
     /// </summary>
     class VHDLSignalTypeBinary : VHDLSignalType
     {
-        public override void buildFromHDL()
-        {
-            throw new NotImplementedException();
-        }
 
         public override string buildHDLFormat()
         {
