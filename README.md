@@ -1,8 +1,13 @@
+
+## NOTE!
+This tool is deprecated but will be kept available for the ones who like to use it. For new users, I would advise you to look at the newer [HDL Toolbox](https://github.com/m47812/hdl_toolbox) which contains very similar (and more) functionality.
+
 # HDL Converter
 ![Title](/Documentation/1_Images/HDLConverterLogoSmall.png)
 
 [![License](https://img.shields.io/badge/License-AGPL_3.0-blue.svg)](/LICENSE)
 [![C#](https://img.shields.io/badge/Software-C%23-green)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+
 
 A simple tool that can be used to convert the header syntax of a verilog module or VHDL Entity to an instantiation syntax and create testbench 
 structures (top level and verify). 
